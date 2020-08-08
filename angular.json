@@ -21,12 +21,49 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/assets/images"
             ],
             "styles": [
+
+              "node_modules/open-iconic/font/css/open-iconic-bootstrap.min.css",
+              "node_modules/animate.css/animate.css",
+              "node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
+              "node_modules/owl.carousel/dist/assets/owl.theme.default.min.css",
+
+
+              "node_modules/magnific-popup/dist/magnific-popup.css",
+              "node_modules/aos/dist/aos.css",
+              "src/ionicons.min.css",
+
+              "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
+              "node_modules/jquery-timepicker/jquery.timepicker.css",
+              "src/flaticon.css",
+              "src/icomoon.css",
               "src/styles.css"
+
+
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.slim.min.js",
+
+
+              "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jquery-migrate/dist/jquery-migrate.min.js",
+              "node_modules/jquery.easing/jquery.easing.min.js",
+              "node_modules/jquery-waypoints/waypoints.min.js",
+              "node_modules/jquery.stellar/jquery.stellar.js",
+              "node_modules/owl.carousel/dist/owl.carousel.min.js",
+              "node_modules/magnific-popup/dist/jquery.magnific-popup.min.js",
+              "node_modules/aos/dist/aos.js",
+              "node_modules/jquery.animate-number/jquery.animateNumber.min.js",
+              "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+              "node_modules/scrollax/scrollax.min.js",
+
+              "src/style.js"
+            ]
           },
           "configurations": {
             "production": {
