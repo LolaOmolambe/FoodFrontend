@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from "@angular/forms";
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import {AuthModule} from './Components/auth/auth.module';
+import { AuthModule } from './Components/auth/auth.module';
+import { AngularMaterialModule } from './angular-material.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,11 +12,14 @@ import { HomeComponent } from './Components/home/home.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { FooterComponent } from './Components/footer/footer.component';
 //import { ProductCreateComponent } from './Components/products/product-create/product-create.component';
-import {ProductsModule} from './Components/products/products.module';
-import {AuthInterceptor} from './Components/auth/auth-interceptor';
-import {OrdersModule} from './Components/orders/orders.module';
-import {UsersModule} from './Components/user/user.module';
-import { ShopModule } from "./Components/shop/shop.module";
+import { ProductsModule } from './Components/products/products.module';
+import { AuthInterceptor } from './Components/auth/auth-interceptor';
+import { OrdersModule } from './Components/orders/orders.module';
+import { UsersModule } from './Components/user/user.module';
+import { ShopModule } from './Components/shop/shop.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ErrorComponent } from '../error/error.component';
+import { ErrorInterceptor } from './error-interceptor';
 //import { CartItemComponent } from './Components/Cart/cart-item/cart-item.component';
 //import { UserListComponent } from './Components/User/user-list/user-list.component';
 //import { ShopListComponent } from './Components/shop/shop-list/shop-list.component';
@@ -29,6 +33,7 @@ import { ShopModule } from "./Components/shop/shop.module";
     HomeComponent,
     HeaderComponent,
     FooterComponent,
+    ErrorComponent,
     //CartItemComponent,
     //ShopListComponent,
     //UserListComponent,
@@ -46,11 +51,15 @@ import { ShopModule } from "./Components/shop/shop.module";
     ProductsModule,
     OrdersModule,
     UsersModule,
-    ShopModule
+    ShopModule,
+    AngularMaterialModule,
+    BrowserAnimationsModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
-export class AppModule { }
+export class AppModule {}
