@@ -18,8 +18,5 @@ export class AppComponent implements OnInit {
       easing: 'slide'
     });
   }
-
-
-
 }
 

@@ -30,6 +30,7 @@
 //  };
 
 
+
  $(window).stellar({
    responsive: true,
    parallaxBackgrounds: true,
@@ -63,7 +64,7 @@
  // Scrollax
   $.Scrollax();
 
- 
+
  var carousel = function() {
    $('.home-slider').owlCarousel({
      loop:true,

@@ -61,8 +61,7 @@
               "node_modules/jquery.animate-number/jquery.animateNumber.min.js",
               "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
               "node_modules/scrollax/scrollax.min.js",
-
-              "src/style.js"
+              "src/script.js"
             ]
           },
           "configurations": {

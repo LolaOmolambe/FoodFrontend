@@ -1,0 +1,70 @@
+
+
+
+@keyframes switch-images{
+ 10%{
+    background-image: url(../../../assets/images/bg_1.jpg);
+  }
+  58%{
+    background-image: url(../../../assets/images/bg_2.jpg);
+  }
+  97%{
+    background-image: url(../../../assets/images/bg_3.jpg);
+  }
+}
+
+
+.custom-carousel{
+  width: 100%;
+  height:500px;
+  background-image: url(../../../assets/images/bg_1.jpg);
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  background-size: 100%;
+  background-color: rgba(0,0,0,.5);
+  background-size: 100%;
+  background-position: center;
+  animation-name: switch-images;
+  animation-timing-function: ease-in-out;
+  animation-duration: 6000ms;
+  animation-delay: 3000ms;
+  animation-iteration-count: infinite;
+  transition: all ease-in 200ms;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.text-white{
+  color: white;
+}
+
+.new-font{
+  font-family: "Amatic SC", cursive;
+  font-size: 6.4rem;
+}
+
+
+.font-2{
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  word-spacing: 3px;
+
+}
+
+@media screen and (max-width:700px){
+  .new-font{
+    font-size: 2.2rem;
+  }
+  .font-2{
+    font-size: .6rem;
+    letter-spacing: 0;
+    word-spacing: 0;
+  }
+  .custom-carousel{
+    background-size: cover;
+    height:500px;
+  }
+}

@@ -1,0 +1,62 @@
+<div class="hero-wrap hero-bread" style="background-image: url('../../../../assets/images/bg_2.jpg');">
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-center justify-content-center">
+      <div class="col-md-9 ftco-animate text-center">
+        <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Products</span></p>
+        <h1 class="mb-0 bread">Orders</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="ftco-section ftco-cart">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 ftco-animate">
+        <div class="cart-list">
+          <table class="table">
+            <thead class="thead-primary">
+              <tr class="text-center">
+                <th>S/N</th>
+                <th>Order Id</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Genre</th>
+                <th>Date Created</th>
+                <th>Date Updated</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center" *ngFor="let product of products; let ndx = index">
+                <td>{{ndx+1}}</td>
+                <td class="product-name">
+                  {{product.name}}
+                </td>
+
+                <td class="image-prod">
+                  <div class="post-image">
+                    <img [src]="product.imagePath" [alt]="product.name"></div>
+                </td>
+
+                <td class="price">{{product.price}}</td>
+
+                <td class="product-name">
+                  <h3>{{product.genre}}</h3>
+                </td>
+                <td>{{ product.createdAt | date:'medium'}}</td>
+                <td>{{ product.updatedAt | date: 'medium'}}</td>
+                <td>
+                  <a [routerLink]="['/edit', product.id]" class="btn btn-primary">Edit</a>
+
+                </td>
+              </tr><!-- END TR-->
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
