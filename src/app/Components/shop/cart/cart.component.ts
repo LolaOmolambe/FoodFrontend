@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopService } from '../shop.service';
+import { AuthService } from "src/app/Components/auth/auth.service";
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 //import { Product } from '../../products/product.model';
 
 @Component({
@@ -11,8 +14,13 @@ export class CartComponent implements OnInit {
   cartItems = [];
   cartTotal = 0;
   cartObj = [];
+  isLoading = false;
+  userId : string;
+  userIsAdmin : string;
+  userIsAuthenticated = false;
+  private authStatusSub: Subscription;
 
-  constructor(private shopService: ShopService) {}
+  constructor(private shopService: ShopService, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     //console.log("Inside init service");
@@ -26,22 +34,29 @@ export class CartComponent implements OnInit {
 
     // console.log(JSON.parse(localStorage.getItem("cartItems")));
     this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
-    console.log(this.cartObj.length);
-    this.cartTotal = 0;
-    this.cartObj.forEach((item) => {
-      this.cartTotal += item.qty * item.price;
-    });
-    console.log('total ', this.cartTotal);
-    console.log('local storage', this.cartObj);
+    if(this.cartObj != null){
+      console.log(this.cartObj.length);
+      this.cartTotal = 0;
+      this.cartObj.forEach((item) => {
+        this.cartTotal += item.qty * item.price;
+      });
+      console.log('total ', this.cartTotal);
+      console.log('local storage', this.cartObj);
+    }
 
-    //console.log("length ", this.cartItems.length);
-    // if(this.cartObj != null){
-    //   this.cartTotal = 0;
-    //   this.cartObj.forEach((item) => {
-    //     this.cartTotal += item.qty * item.price;
-    //   });
-    //   console.log(this.cartTotal);
-    // }
+
+    this.isLoading = true;
+    this.userId = this.authService.getUserId();
+    this.userIsAdmin = this.authService.getRole();
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
+        this.userIsAdmin = this.authService.getRole();
+        console.log(this.userIsAdmin);
+      });
   }
 
   addProductToCart(product: any) {
@@ -79,5 +94,17 @@ export class CartComponent implements OnInit {
   createOrder() {
     this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
     this.shopService.addOrders(this.cartObj);
+  }
+
+  proceedToCheckout(){
+    console.log(this.userIsAuthenticated);
+    //this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
+
+    if(this.userIsAuthenticated === false ){
+      this.router.navigate(['login'])
+    }
+    else {
+      this.router.navigate(['checkout'])
+    }
   }
 }

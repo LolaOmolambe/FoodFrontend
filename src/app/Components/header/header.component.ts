@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private authListenerSubs: Subscription;
   userIsAuthenticated = false;
   userIsAdmin: string;
+  cartItem = [];
   cartItems = 0;
   constructor(private authService: AuthService) {}
 
@@ -26,7 +27,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.userIsAdmin = this.authService.getRole();
       console.log("roless ", this.userIsAdmin);
     });
-    this.cartItems = (JSON.parse(localStorage.getItem("cartItems")).length);
+    this.cartItem = JSON.parse(localStorage.getItem("cartItems"));
+    if(this.cartItem != null){
+      this.cartItems = this.cartItem.length;
+    }
     console.log(this.cartItems);
   }
 

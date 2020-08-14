@@ -3,6 +3,7 @@ import {ReactiveFormsModule, FormsModule} from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import {AngularMaterialModule} from '../../angular-material.component';
 
 import { ShopListComponent } from './shop-list/shop-list.component';
 import { CartComponent } from './cart/cart.component';
@@ -22,8 +23,10 @@ import { ShopListItemComponent } from './shop-list-item/shop-list-item.component
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    AngularMaterialModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+
   ],
 })
 

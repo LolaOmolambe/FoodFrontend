@@ -46,13 +46,14 @@ import { ErrorInterceptor } from './error-interceptor';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    AngularMaterialModule,
     HttpClientModule,
     AuthModule,
     ProductsModule,
     OrdersModule,
     UsersModule,
     ShopModule,
-    AngularMaterialModule,
+
     BrowserAnimationsModule,
   ],
   providers: [

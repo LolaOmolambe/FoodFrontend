@@ -3,6 +3,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import {AngularMaterialModule} from '../../angular-material.component';
 
 import { UserListComponent } from './user-list/user-list.component';
 
@@ -14,6 +15,7 @@ import { UserListComponent } from './user-list/user-list.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    AngularMaterialModule,
     RouterModule
   ],
 })

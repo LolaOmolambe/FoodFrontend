@@ -58,6 +58,8 @@
 
             </tbody>
           </table>
+          <mat-paginator [length]="totalUsers" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions"
+          (page)="onChangedPage($event)" *ngIf="users.length > 0"></mat-paginator>
         </div>
       </div>
     </div>

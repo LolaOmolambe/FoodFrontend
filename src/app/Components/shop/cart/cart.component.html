@@ -98,7 +98,7 @@
           <h3>Cart Totals</h3>
           <p class="d-flex">
             <span>Subtotal</span>
-            <span>$20.60</span>
+            <span>{{cartTotal | currency: 'USD'}}</span>
           </p>
           <p class="d-flex">
             <span>Delivery</span>
@@ -106,7 +106,7 @@
           </p>
           <p class="d-flex">
             <span>Discount</span>
-            <span>$3.00</span>
+            <span>$0.00</span>
           </p>
           <hr>
           <p class="d-flex total-price">
@@ -114,7 +114,8 @@
             <span>{{cartTotal | currency: 'USD'}}</span>
           </p>
         </div>
-        <p><a (click)="createOrder()" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+        <p><a (click)="proceedToCheckout()" *ngIf="cartObj !== null" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+        <!-- <p><a (click)="createOrder()" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p> -->
       </div>
     </div>
   </div>

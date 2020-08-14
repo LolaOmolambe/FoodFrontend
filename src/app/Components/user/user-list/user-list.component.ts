@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UsersService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-user-list',
@@ -47,6 +48,12 @@ export class UserListComponent implements OnInit {
         this.userId = this.authService.getUserId();
         this.userIsAdmin = this.authService.getRole();
       });
+  }
+  onChangedPage(pageData: PageEvent) {
+    this.isLoading = true;
+    this.currentPage = pageData.pageIndex + 1;
+    this.postsPerPage = pageData.pageSize;
+    this.usersService.getUsers(this.postsPerPage, this.currentPage);
   }
 
   ngOnDestroy() {

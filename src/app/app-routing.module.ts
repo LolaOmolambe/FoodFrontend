@@ -11,24 +11,28 @@ import { UserListComponent } from './Components/user/user-list/user-list.compone
 import { ShopListComponent } from "./Components/shop/shop-list/shop-list.component";
 import { CartComponent } from "./Components/shop/cart/cart.component";
 import { CheckoutComponent } from "./Components/shop/checkout/checkout.component";
+import {AuthGuard} from './Components/auth/auth.guard';
+//import {StripePaymentComponent} from './Components/shop/stripe-payment/stripe-payment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'addproduct', component: ProductCreateComponent },
-  { path: 'productlist', component: ProductListComponent },
-  { path: 'edit/:productId', component: ProductCreateComponent },
-  { path: 'orderlist', component: OrderListComponent },
-  { path: 'userlist', component: UserListComponent },
+  { path: 'addproduct', component: ProductCreateComponent, canActivate: [AuthGuard] },
+  { path: 'productlist', component: ProductListComponent, canActivate: [AuthGuard] },
+  { path: 'edit/:productId', component: ProductCreateComponent, canActivate: [AuthGuard] },
+  { path: 'orderlist', component: OrderListComponent, canActivate: [AuthGuard] },
+  { path: 'userlist', component: UserListComponent, canActivate: [AuthGuard] },
   { path: 'shoplist', component: ShopListComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent }
+  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
+  //{ path: 'stripe', component: StripePaymentComponent}
 
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {}
