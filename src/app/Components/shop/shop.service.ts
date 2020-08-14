@@ -30,12 +30,12 @@ export class ShopService {
 
   addProductToCart(product: any) {
     let productExists = false;
-    console.log("hereeeeee");
+    console.log('hereeeeee');
 
     for (let i in this.cartItems) {
       if (this.cartItems[i].productId === product.id) {
         this.cartItems[i].qty++;
-        this.cartItems[i].total += this.cartItems[i].price
+        this.cartItems[i].total += this.cartItems[i].price;
         productExists = true;
         break;
       }
@@ -48,11 +48,11 @@ export class ShopService {
         qty: 1,
         price: product.price,
         imagePath: product.imagePath,
-        total: product.price
+        total: product.price,
       });
     }
 
-    localStorage.setItem("cartItems", JSON.stringify(this.cartItems));
+    localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
 
     //console.log(this.cartItems);
     this.cartTotal = 0;
@@ -62,25 +62,21 @@ export class ShopService {
     //localStorage.setItem("cartTotal", JSON.stringify(this.cartTotal));
   }
 
-  addOrders(
-    orders: any[],
-
-  ) {
-    // const productData = new FormData();
-    // productData.append('title', title);
-    // productData.append('description', description);
-    // productData.append('genre', genre);
-    // productData.append('price', price.toString());
-    // productData.append('image', image, title);
+  addOrders(orders: any[], total: Number) {
     let productData = {
-      orders
-    }
+      orders,
+      total,
+    };
     this.http
-      .post<{ message: string }>(BACKEND_URL, productData)
+      .post<{ message: string, status: string }>(BACKEND_URL, productData)
       .subscribe((responseData) => {
-        this.router.navigate(['/']);
+        console.log(responseData);
+        //console.log("donnnnnn");
+        if(responseData.status === "success"){
+          localStorage.removeItem('cartItems');
+          this.router.navigate(['thankyou']);
+        }
+
       });
   }
-
-
 }

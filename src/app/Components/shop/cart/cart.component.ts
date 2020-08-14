@@ -91,10 +91,10 @@ export class CartComponent implements OnInit {
     });
   }
 
-  createOrder() {
-    this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
-    this.shopService.addOrders(this.cartObj);
-  }
+  // createOrder() {
+  //   this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
+  //   this.shopService.addOrders(this.cartObj);
+  // }
 
   proceedToCheckout(){
     console.log(this.userIsAuthenticated);

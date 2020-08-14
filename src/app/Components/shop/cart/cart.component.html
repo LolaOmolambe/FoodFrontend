@@ -19,7 +19,8 @@
           <table class="table">
             <thead class="thead-primary">
               <tr class="text-center">
-                <th>Remove</th>
+                <!-- <th>Remove</th> -->
+                <th>S/N</th>
                 <th>Image</th>
                 <th>Product name</th>
                 <th>Price</th>
@@ -32,9 +33,10 @@
                 <app-cart-item [cartItem]="item" ></app-cart-item>
               </tr> -->
 
-              <tr class="text-center" *ngFor="let item of cartObj; let ndx = index" >
-                <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
 
+              <tr class="text-center" *ngFor="let item of cartObj; let ndx = index" >
+                <!-- <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td> -->
+                <td>{{ndx+1}}</td>
                 <td class="image-prod" >
                   <!-- <div class="img" > -->
                     <img class="post-image" [src]="item.imagePath">

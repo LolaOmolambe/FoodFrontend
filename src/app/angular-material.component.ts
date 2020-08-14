@@ -7,9 +7,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {MatIconModule} from '@angular/material/icon';
-import {MatFormFieldModule} from '@angular/material/form-field'
+import {
+  MatDialogModule,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   imports: [
@@ -23,8 +27,6 @@ import {MatFormFieldModule} from '@angular/material/form-field'
     MatDialogModule,
     MatIconModule,
     MatFormFieldModule,
-
-
   ],
 
   exports: [
@@ -38,12 +40,10 @@ import {MatFormFieldModule} from '@angular/material/form-field'
     MatDialogModule,
     MatIconModule,
     MatFormFieldModule,
-
-
   ],
-   providers: [
-     { provide: MAT_DIALOG_DATA, useValue: {} },
-     { provide: MatDialogRef, useValue: {} }
-   ]
+  providers: [
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+    { provide: MatDialogRef, useValue: {} },
+  ],
 })
 export class AngularMaterialModule {}

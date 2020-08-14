@@ -18,43 +18,43 @@
             <thead class="thead-primary">
               <tr class="text-center">
                 <th>S/N</th>
-                <th>Order Id</th>
-                <th>Product</th>
-                <th>Quantity</th>
+                <th>Customer Name</th>
+                <th>Customer Email</th>
                 <th>Price</th>
-                <th>Genre</th>
+                <th>Status</th>
                 <th>Date Created</th>
                 <th>Date Updated</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr class="text-center" *ngFor="let product of products; let ndx = index">
+              <tr class="text-center" *ngFor="let order of orders; let ndx = index">
                 <td>{{ndx+1}}</td>
                 <td class="product-name">
-                  {{product.name}}
+                  {{order.firstName}}&nbsp; {{order.lastName}}
                 </td>
-
-                <td class="image-prod">
-                  <div class="post-image">
-                    <img [src]="product.imagePath" [alt]="product.name"></div>
-                </td>
-
-                <td class="price">{{product.price}}</td>
 
                 <td class="product-name">
-                  <h3>{{product.genre}}</h3>
+                  {{order.email}}
                 </td>
-                <td>{{ product.createdAt | date:'medium'}}</td>
-                <td>{{ product.updatedAt | date: 'medium'}}</td>
-                <td>
+
+                <td class="price">{{order.grandTotal | currency: 'USD'}}</td>
+
+                <td class="product-name">
+                  <h3>{{order.status}}</h3>
+                </td>
+                <td>{{ order.createdAt | date:'medium'}}</td>
+                <td>{{ order.updatedAt | date: 'medium'}}</td>
+                <!-- <td>
                   <a [routerLink]="['/edit', product.id]" class="btn btn-primary">Edit</a>
 
-                </td>
+                </td> -->
               </tr><!-- END TR-->
 
             </tbody>
           </table>
+          <mat-paginator [length]="totalOrders" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions"
+          (page)="onChangedPage($event)" *ngIf="orders.length > 0"></mat-paginator>
         </div>
       </div>
     </div>

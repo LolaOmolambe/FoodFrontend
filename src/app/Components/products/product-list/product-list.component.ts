@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProductsService } from '../products.service';
 import { AuthService } from '../../auth/auth.service';
-//import {  } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-product-list',
@@ -58,11 +58,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
       });
   }
 
-  // onChangedPage(pageData: PageEvent) {
-  //   this.isLoading = true;
-  //   this.currentPage = pageData.pageIndex + 1;
-  //   this.postsPerPage = pageData.pageSize;
-  //   this.productsService.getProducts(this.postsPerPage, this.currentPage);
-  // }
+  onChangedPage(pageData: PageEvent) {
+    this.isLoading = true;
+    this.currentPage = pageData.pageIndex + 1;
+    this.postsPerPage = pageData.pageSize;
+    this.productsService.getProducts(this.postsPerPage, this.currentPage);
+  }
 
 }
