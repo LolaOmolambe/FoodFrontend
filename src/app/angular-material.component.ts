@@ -14,6 +14,7 @@ import {
 } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDialogModule,
     MatIconModule,
     MatFormFieldModule,
+    MatSnackBarModule
   ],
 
   exports: [
@@ -40,6 +42,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatDialogModule,
     MatIconModule,
     MatFormFieldModule,
+    MatSnackBarModule
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },

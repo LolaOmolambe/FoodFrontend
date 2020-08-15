@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './Components/home/home.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { FooterComponent } from './Components/footer/footer.component';
+//import { ShopListItemComponent } from '../app/Components/shop/shop-list-item/shop-list-item.component';
 //import { ProductCreateComponent } from './Components/products/product-create/product-create.component';
 import { ProductsModule } from './Components/products/products.module';
 import { AuthInterceptor } from './Components/auth/auth-interceptor';
@@ -20,6 +21,7 @@ import { ShopModule } from './Components/shop/shop.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorComponent } from '../error/error.component';
 import { ErrorInterceptor } from './error-interceptor';
+import { HomeProductsComponent } from './Components/home-products/home-products.component';
 //import { CartItemComponent } from './Components/Cart/cart-item/cart-item.component';
 //import { UserListComponent } from './Components/User/user-list/user-list.component';
 //import { ShopListComponent } from './Components/shop/shop-list/shop-list.component';
@@ -34,6 +36,8 @@ import { ErrorInterceptor } from './error-interceptor';
     HeaderComponent,
     FooterComponent,
     ErrorComponent,
+    HomeProductsComponent,
+    //ShopListItemComponent
     //CartItemComponent,
     //ShopListComponent,
     //UserListComponent,
