@@ -12,7 +12,7 @@ export class ShopListComponent implements OnInit {
 
   isLoading = false;
   totalProducts = 0;
-  postsPerPage = 5;
+  postsPerPage = 12;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   userIsAuthenticated = false;
