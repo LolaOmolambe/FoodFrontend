@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   isLoading = false;
   totalProducts = 0;
-  postsPerPage = 6;
+  postsPerPage = 8;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   userIsAuthenticated = false;
