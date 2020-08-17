@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-center">
       <div class="col-md-9 ftco-animate text-center">
-        <p class="breadcrumbs"><span class="mr-2"><a [routerLink]="['/']" >Home</a></span> <span></span></p>
+        <p class="breadcrumbs"><span class="mr-2"><a [routerLink]="['/']">Home</a></span> <span></span></p>
         <h1 class="mb-0 bread">Login</h1>
       </div>
     </div>
@@ -42,13 +42,43 @@
             <div class="line-separator"></div>
             <div class="or-label">or</div>
             <div class="line-separator"></div>
-        </div>
+          </div>
+           <div class="row">
+            <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline loginBtn loginBtn--google" #loginRef
+                ><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Login Using
+                Google</a> </div>
+          </div> <br>
+
+          <!-- <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline"
+                (click)="authenticate()"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Login Using
+                Google</a> </div>
+          </div> <br> -->
+          <!-- <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline"
+                href="/auth/google"
+
+                 ><img
+                  src="https://img.icons8.com/color/16/000000/google-logo.png"> Login Using Google</a> </div>
+          </div> <br> -->
+
           <!-- <div class="row">
-            <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" (click) = "googleLogin()"><img
+            <div class="col-md-12"> <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline"
+                href="/auth/google"
+                 (click)="googleLogin()"
+                 ><img
                   src="https://img.icons8.com/color/16/000000/google-logo.png"> Login Using Google</a> </div>
           </div> <br> -->
         </form>
 
+        <!-- <div class="container mt-5">
+          <h2>Google Login</h2>
+          <div class="row mt-5">
+            <div class="col-md-4 mt-2 m-auto ">
+                <button class="loginBtn loginBtn--google" #loginRef>
+                    Login with Google
+                  </button>
+            </div>
+          </div>
+        </div> -->
 
       </div>
 
@@ -79,4 +109,4 @@
 <div *ngIf="isLoading" id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
     <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
     <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
-    </svg></div>
+  </svg></div>

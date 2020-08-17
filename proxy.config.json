@@ -1,0 +1,10 @@
+{
+  "/auth/google": {
+    "target": "http://localhost:3000/api/user/auth/google",
+    "secure" : false,
+
+    "logLevel": "info"
+
+
+  }
+}

@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { environment } from '../../../environments/environment';
-//import { Product } from './product.model';
 
 const BACKEND_URL = environment.apiUrl + '/order/';
 
@@ -18,10 +17,6 @@ export class OrdersService {
     orders: [];
     orderCount: number;
   }>();
-  // private productsUpdated = new Subject<{
-  //   products: Product[];
-  //   productCount: number;
-  // }>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -60,5 +55,39 @@ export class OrdersService {
 
   getOrderUpdateListener() {
     return this.ordersUpdated.asObservable();
+  }
+  getPersonalOrders(postsPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
+    this.http
+      .get<{ message: string; orders: any; maxOrders: number }>(
+        BACKEND_URL+ "myOrders" + queryParams
+      )
+      .pipe(
+        map((orderData) => {
+          console.log(orderData);
+          return {
+            orders: orderData.orders.map((order) => {
+              return {
+                name: order.product_id.name,
+                image: order.product_id.imagePath,
+                genre: order.product_id.genre,
+                price: order.product_price,
+                quantity: order.product_quantity,
+                status: order.order_id.status,
+                createdAt: order.order_id.createdAt,
+                updatedAt: order.order_id.updatedAt,
+              };
+            }),
+            maxOrders: orderData.maxOrders,
+          };
+        })
+      )
+      .subscribe((transformedOrderData) => {
+        this.orders = transformedOrderData.orders;
+        this.ordersUpdated.next({
+          orders: [...this.orders],
+          orderCount: transformedOrderData.maxOrders,
+        });
+      });
   }
 }

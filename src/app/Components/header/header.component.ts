@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
+import { ShopService } from '../shop/shop.service';
 
 @Component({
   selector: 'app-header',
@@ -11,27 +12,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private authListenerSubs: Subscription;
   userIsAuthenticated = false;
   userIsAdmin: string;
-  cartItem = [];
-  cartItems = 0;
-  constructor(private authService: AuthService) {}
-
+  cartcount;
+  constructor(private authService: AuthService, private shopService: ShopService) {}
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.userIsAdmin = this.authService.getRole();
-    console.log("role ", this.userIsAdmin);
+    console.log('role ', this.userIsAdmin);
     this.authListenerSubs = this.authService
-    .getAuthStatusListener()
-    .subscribe(isAuthenticated => {
-      this.userIsAuthenticated = isAuthenticated,
-      this.userIsAdmin = this.authService.getRole();
-      console.log("roless ", this.userIsAdmin);
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        (this.userIsAuthenticated = isAuthenticated),
+          (this.userIsAdmin = this.authService.getRole());
+        //console.log('roless ', this.userIsAdmin);
+      });
+    this.shopService.getCountOfCart().subscribe(count => {
+      this.cartcount = count
     });
-    this.cartItem = JSON.parse(localStorage.getItem("cartItems"));
-    if(this.cartItem != null){
-      this.cartItems = this.cartItem.length;
-    }
-    console.log(this.cartItems);
+   
   }
 
   ngOnDestroy() {

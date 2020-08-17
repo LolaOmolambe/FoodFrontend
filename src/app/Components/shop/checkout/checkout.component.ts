@@ -8,6 +8,7 @@ import {ShopService} from '../shop.service';
 })
 export class CheckoutComponent implements OnInit {
   cartTotal = 0;
+  isLoading = false;
   cartObj = [];
   constructor(public shopService: ShopService) {}
 
@@ -23,11 +24,12 @@ export class CheckoutComponent implements OnInit {
 
       console.log('local storage', this.cartObj);
     }
-    
+
 
   }
 
   createOrder() {
+    this.isLoading = true;
     this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
     this.shopService.addOrders(this.cartObj, this.cartTotal);
   }

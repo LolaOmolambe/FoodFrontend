@@ -179,15 +179,15 @@ export class AuthService {
     };
   }
 
-  googlelogin() {
-    //const authData: AuthData = { email: email, password: password };
+  googlelogin(email: string, firstName: string, lastName: string) {
+    const authData = { email, firstName, lastName };
     this.http
-      .get<{
+      .post<{
         token: string;
         expiresIn: number;
         userId: string;
         userRole: string;
-      }>(BACKEND_URL + '/auth/google')
+      }>(BACKEND_URL + '/googlelogin', authData)
       .subscribe(
         (response) => {
           const token = response.token;

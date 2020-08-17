@@ -16,7 +16,6 @@ export class ShopListItemComponent implements OnInit {
   ngOnInit() {}
 
   openSnackBar() {
-    //console.log("snackbar");
     this.snackBar.open('Item added to cart','', {
       duration: 3000
     });
@@ -25,12 +24,6 @@ export class ShopListItemComponent implements OnInit {
   handleAddToCart() {
     this.shopService.sendMsg(this.productItem);
     this.openSnackBar();
-    // var x = document.getElementById('snackbar');
-    // console.log('modal');
-    // x.className = 'show';
-    // x.className = x.className.replace('show', '');
-    // setTimeout(function () {
-    //   x.className = x.className.replace('show', '');
-    // }, 3000);
+
   }
 }

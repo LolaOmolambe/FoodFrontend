@@ -1,9 +1,9 @@
-<div class="hero-wrap hero-bread" style="background-image: url('../../../../assets/images/bg_1.jpg');">
+<div class="hero-wrap hero-bread" style="background-image: url('../../../../assets/images/bg_2.jpg');">
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-center">
       <div class="col-md-9 ftco-animate text-center">
         <p class="breadcrumbs"><span class="mr-2"><a [routerLink]="['/']">Home</a></span> <span></span></p>
-        <h1 class="mb-0 bread">Product List</h1>
+        <h1 class="mb-0 bread">My Orders</h1>
       </div>
     </div>
   </div>
@@ -17,50 +17,54 @@
           <table class="table">
             <thead class="thead-primary">
               <tr class="text-center">
-                <!-- <th>&nbsp;</th> -->
                 <th>S/N</th>
-                <th>Name</th>
-                <th>&nbsp;</th>
-                <!-- <th>&nbsp;</th> -->
+                <th>Item Name</th>
+                <th>Item Genre</th>
+                <th>Quantity</th>
                 <th>Price</th>
-                <th>Genre</th>
+                <th>Image</th>
+                <th>Status</th>
                 <th>Date Created</th>
                 <th>Date Updated</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr class="text-center" *ngFor="let product of products; let ndx = index">
-                <!-- <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td> -->
+              <tr class="text-center" *ngFor="let order of orders; let ndx = index">
                 <td>{{ndx+1}}</td>
                 <td class="product-name">
-                  {{product.name}}
+                  {{order.name}}&nbsp;
                 </td>
+
+                <td class="product-name">
+                  {{order.genre}}
+                </td>
+                <td class="product-name">
+                  {{order.quantity}}
+                </td>
+
+                <td class="price">{{order.price | currency: 'USD'}}</td>
 
                 <td class="image-prod">
                   <div class="post-image">
-                    <img [src]="product.imagePath" [alt]="product.name"></div>
+                    <img [src]="order.image" [alt]="order.name"></div>
                 </td>
-
-                <td class="price">{{product.price}}</td>
 
                 <td class="product-name">
-                  <h3>{{product.genre}}</h3>
+                  <h3>{{order.status}}</h3>
                 </td>
-                <td>{{ product.createdAt | date:'medium'}}</td>
-                <td>{{ product.updatedAt | date: 'medium'}}</td>
-                <td>
-                  <a
+                <td>{{ order.createdAt | date:'medium'}}</td>
+                <td>{{ order.updatedAt | date: 'medium'}}</td>
+                <!-- <td>
+                  <a [routerLink]="['/edit', product.id]" class="btn btn-primary">Edit</a>
 
-                    [routerLink]="['/edit', product.id]" class="btn btn-primary">Edit</a>
-
-                </td>
+                </td> -->
               </tr><!-- END TR-->
 
             </tbody>
           </table>
-          <mat-paginator [length]="totalProducts" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions"
-    (page)="onChangedPage($event)" *ngIf="products.length > 0"></mat-paginator>
+          <mat-paginator [length]="totalOrders" [pageSize]="postsPerPage" [pageSizeOptions]="pageSizeOptions"
+          (page)="onChangedPage($event)" *ngIf="orders.length > 0"></mat-paginator>
         </div>
       </div>
     </div>
@@ -72,6 +76,3 @@
   <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
   <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
   </svg></div>
-
-
-

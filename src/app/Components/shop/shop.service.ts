@@ -8,6 +8,9 @@ const BACKEND_URL = environment.apiUrl + '/order/';
 
 @Injectable({ providedIn: 'root' })
 export class ShopService {
+  count = 0;
+  simpleObservable = new Subject();
+  simpleObservables = this.simpleObservable.asObservable();
   subject = new Subject();
   //subject = new Subscription();
   cartItems = [];
@@ -31,7 +34,9 @@ export class ShopService {
   addProductToCart(product: any) {
     let productExists = false;
     console.log('hereeeeee');
-
+    if (JSON.parse(localStorage.getItem('cartItems')) != null) {
+      this.cartItems = JSON.parse(localStorage.getItem('cartItems'));
+    }
     for (let i in this.cartItems) {
       if (this.cartItems[i].productId === product.id) {
         this.cartItems[i].qty++;
@@ -59,7 +64,12 @@ export class ShopService {
     this.cartItems.forEach((item) => {
       this.cartTotal += item.quantity * item.price;
     });
-    //localStorage.setItem("cartTotal", JSON.stringify(this.cartTotal));
+
+    if (this.cartItems != null) {
+      this.count = this.cartItems.length;
+      this.simpleObservable.next(this.count);
+    }
+    console.log(this.cartItems);
   }
 
   addOrders(orders: any[], total: Number) {
@@ -68,15 +78,24 @@ export class ShopService {
       total,
     };
     this.http
-      .post<{ message: string, status: string }>(BACKEND_URL, productData)
+      .post<{ message: string; status: string }>(BACKEND_URL, productData)
       .subscribe((responseData) => {
         console.log(responseData);
         //console.log("donnnnnn");
-        if(responseData.status === "success"){
+        if (responseData.status === 'success') {
           localStorage.removeItem('cartItems');
           this.router.navigate(['thankyou']);
         }
-
       });
+  }
+
+  removeOrder(cartObj) {
+    this.count = cartObj.length;
+    console.log('shop service count ', this.count);
+    this.simpleObservable.next(this.count);
+  }
+
+  getCountOfCart() {
+    return this.simpleObservables;
   }
 }

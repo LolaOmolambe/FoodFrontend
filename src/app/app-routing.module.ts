@@ -13,6 +13,7 @@ import { CartComponent } from './Components/shop/cart/cart.component';
 import { CheckoutComponent } from './Components/shop/checkout/checkout.component';
 import { AuthGuard } from './Components/auth/auth.guard';
 import { ThankYouComponent } from '../app/Components/shop/thank-you/thank-you.component';
+import {MyOrdersComponent} from '../app/Components/orders/my-orders/my-orders.component';
 //import {StripePaymentComponent} from './Components/shop/stripe-payment/stripe-payment.component';
 
 const routes: Routes = [
@@ -43,7 +44,8 @@ const routes: Routes = [
   { path: 'shoplist', component: ShopListComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
-  { path: 'thankyou', component: ThankYouComponent }
+  { path: 'thankyou', component: ThankYouComponent },
+  { path: 'myorders', component: MyOrdersComponent, canActivate: [AuthGuard] },
   //{ path: 'stripe', component: StripePaymentComponent}
 ];
 
