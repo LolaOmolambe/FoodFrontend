@@ -29,7 +29,7 @@ export class CheckoutComponent implements OnInit {
       this.cartObj.forEach((item) => {
         this.cartTotal += item.qty * item.price;
       });
-      this.isLoading = true;
+      //this.isLoading = true;
       this.userId = this.authService.getUserId();
       this.userIsAdmin = this.authService.getRole();
       this.userIsAuthenticated = this.authService.getIsAuth();
