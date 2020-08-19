@@ -25,9 +25,6 @@ export class ThankYouComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userId = this.authService.getUserId();
-    this.userIsAdmin = this.authService.getRole();
-    this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe((isAuthenticated) => {
@@ -36,6 +33,10 @@ export class ThankYouComponent implements OnInit {
         this.userIsAdmin = this.authService.getRole();
         //console.log(this.userIsAdmin);
       });
+    this.userId = this.authService.getUserId();
+    this.userIsAdmin = this.authService.getRole();
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('orderId')) {
         //this.mode = 'edit';
