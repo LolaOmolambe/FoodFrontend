@@ -47,7 +47,7 @@ const routes: Routes = [
   { path: 'shoplist', component: ShopListComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
-  { path: 'thankyou/:orderId', component: ThankYouComponent, canActivate: [AuthGuard] },
+  { path: 'thankyou/:orderId', component: ThankYouComponent},
   { path: 'myorders', component: MyOrdersComponent, canActivate: [AuthGuard] },
   { path: 'updateOrder/:orderId', component: OrderUpdateComponent, canActivate: [AuthGuard] },
   { path: 'useraccount', component: UserAccountComponent, canActivate: [AuthGuard]  },
