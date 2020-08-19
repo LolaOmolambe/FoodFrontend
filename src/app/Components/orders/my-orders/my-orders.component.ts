@@ -26,6 +26,11 @@ export class MyOrdersComponent implements OnInit {
   constructor(public orderService: OrdersService, private authService: AuthService) {}
 
   ngOnInit() {
+    this.authStatusSub = this.authService
+    .getAuthStatusListener()
+    .subscribe(authStatus => {
+      this.isLoading = false;
+    });
     this.isLoading = true;
     this.orderService.getPersonalOrders(this.postsPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
@@ -39,14 +44,14 @@ export class MyOrdersComponent implements OnInit {
         console.log(this.totalOrders);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService
-      .getAuthStatusListener()
-      .subscribe((isAuthenticated) => {
-        this.userIsAuthenticated = isAuthenticated;
-        this.userId = this.authService.getUserId();
-        this.userIsAdmin = this.authService.getRole();
-        console.log(this.userIsAdmin);
-      });
+    // this.authStatusSub = this.authService
+    //   .getAuthStatusListener()
+    //   .subscribe((isAuthenticated) => {
+    //     this.userIsAuthenticated = isAuthenticated;
+    //     this.userId = this.authService.getUserId();
+    //     this.userIsAdmin = this.authService.getRole();
+    //     console.log(this.userIsAdmin);
+    //   });
   }
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;

@@ -86,9 +86,10 @@ export class ShopService {
         console.log(responseData);
         //console.log("donnnnnn");
         if (responseData.status === 'success') {
+          localStorage.removeItem('cartItems');
           this.payOrders(responseData.orderId);
 
-          //localStorage.removeItem('cartItems');
+
           //this.router.navigate(['thankyou']);
         }
       });
