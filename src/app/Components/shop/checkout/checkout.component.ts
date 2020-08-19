@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ShopService} from '../shop.service';
+import { ShopService } from '../shop.service';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-checkout',
@@ -10,22 +12,36 @@ export class CheckoutComponent implements OnInit {
   cartTotal = 0;
   isLoading = false;
   cartObj = [];
-  constructor(public shopService: ShopService) {}
+  userIsAuthenticated = false;
+  userId: string;
+  private ordersSub: Subscription;
+  private authStatusSub: Subscription;
+  userIsAdmin: string;
+  constructor(
+    public shopService: ShopService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
-    // console.log(JSON.parse(localStorage.getItem("cartItems")));
     this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
-    if(this.cartObj != null){
+    if (this.cartObj != null) {
       this.cartTotal = 0;
       this.cartObj.forEach((item) => {
         this.cartTotal += item.qty * item.price;
       });
-      console.log('total ', this.cartTotal);
-
-      console.log('local storage', this.cartObj);
+      this.isLoading = true;
+      this.userId = this.authService.getUserId();
+      this.userIsAdmin = this.authService.getRole();
+      this.userIsAuthenticated = this.authService.getIsAuth();
+      this.authStatusSub = this.authService
+        .getAuthStatusListener()
+        .subscribe((isAuthenticated) => {
+          this.userIsAuthenticated = isAuthenticated;
+          this.userId = this.authService.getUserId();
+          this.userIsAdmin = this.authService.getRole();
+          //console.log(this.userIsAdmin);
+        });
     }
-
-
   }
 
   createOrder() {

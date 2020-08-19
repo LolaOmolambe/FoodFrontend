@@ -1,0 +1,113 @@
+<div class="hero-wrap hero-bread" style="background-image: url('../../../../assets/images/bg_2.jpg');">
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-center justify-content-center">
+      <div class="col-md-9 ftco-animate text-center">
+        <p class="breadcrumbs"><span class="mr-2"><a [routerLink]="['/']">Home</a></span> <span></span></p>
+        <h1 class="mb-0 bread">My Account</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section *ngIf="!isLoading" class="ftco-section contact-section bg-light">
+  <div class="container">
+    <div class="row d-flex mb-5 contact-info">
+      <div class="w-100"></div>
+      <div class="col-md-3 d-flex">
+        <div class="info bg-white p-4">
+          <p><strong>FirstName:</strong> {{user.firstName}}</p>
+          <p><strong>LastName:</strong> {{user.lastName}}</p>
+        </div>
+      </div>
+      <!-- <div class="col-md-3 d-flex">
+        <div class="info bg-white p-4">
+          <p><strong>State:</strong> {{user.state}}</p>
+          <p><strong>Country:</strong> {{user.country}}</p>
+        </div>
+      </div> -->
+      <div class="col-md-3 d-flex">
+        <div class="info bg-white p-4">
+          <p><strong>Email:</strong>{{user.email}}</p>
+          <p><strong>Phone Number</strong> {{user.phoneNumber}}</p>
+        </div>
+      </div>
+      <div class="col-md-3 d-flex">
+        <div class="info bg-white p-4">
+          <p><strong>Address </strong> {{user.address}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row block-9">
+      <div class="col-md-6 order-md-last d-flex">
+        <form [formGroup]="form" (submit)="onUpdateUser()" class="bg-white p-5 contact-form">
+          <div class="form-group">
+            <label for="firstName" class="control-label">First Name</label>
+            <input type="text" formControlName="firstName" class="form-control" placeholder="First Name">
+            <div
+              *ngIf="form.controls['firstName'].invalid && (form.controls['firstName'].dirty || form.controls['firstName'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="form.controls['firstName'].errors.required">
+                First Name is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastName" class="control-label">Last Name</label>
+            <input type="text" formControlName="lastName" class="form-control" placeholder="Last Name">
+            <div
+              *ngIf="form.controls['lastName'].invalid && (form.controls['lastName'].dirty || form.controls['lastName'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="form.controls['lastName'].errors.required">
+                Last Name is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address" class="control-label">Address</label>
+            <textarea formControlName="address" cols="30" rows="7" class="form-control"
+              placeholder="Address"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="phoneNumber" class="control-label">Phone Number</label>
+            <input type="number" formControlName="phoneNumber" class="form-control" placeholder="Phone Number">
+          </div>
+          <div class="form-group text-center">
+            <input type="submit" value="Update" class="btn btn-primary py-3 px-5">
+          </div>
+        </form>
+
+      </div>
+
+      <div class="col-md-6 d-flex">
+        <!-- <div id="map" class="bg-white"></div> -->
+        <form (submit)="onPasswordChange(savePasswordForm)" #savePasswordForm="ngForm"
+          class="bg-white p-5 contact-form">
+
+          <div class="form-group">
+            <input type="password" name="passwordCurrent" ngModel #passwordCurrentInput="ngModel" class="form-control"
+              placeholder="Current Passsword" required="required">
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" ngModel #passwordInput="ngModel" class="form-control"
+              placeholder="New Password" required="required">
+          </div>
+          <div class="form-group">
+            <input type="password" name="passwordConfirm" ngModel #passwordConfirmInput="ngModel" class="form-control"
+              placeholder="Confirm Password" required="required">
+          </div>
+          <div class="form-group text-center">
+            <input type="submit" value="Update Password" class="btn btn-primary py-3 px-5">
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- loader -->
+<div *ngIf="isLoading" id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+    <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+    <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+  </svg></div>

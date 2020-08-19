@@ -36,15 +36,8 @@ import { HomeProductsComponent } from './Components/home-products/home-products.
     HeaderComponent,
     FooterComponent,
     ErrorComponent,
-    HomeProductsComponent,
-    //ShopListItemComponent
-    //CartItemComponent,
-    //ShopListComponent,
-    //UserListComponent,
-    //OrderListComponent,
-    //ProductListComponent,
-    //ProductCreateComponent,
-    //LoginComponent
+    HomeProductsComponent
+
   ],
   imports: [
     BrowserModule,

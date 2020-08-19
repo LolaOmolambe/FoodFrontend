@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 
 import { environment } from '../../../environments/environment';
 import { User } from './user.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const BACKEND_URL = environment.apiUrl + '/users/';
 
@@ -17,7 +18,7 @@ export class UsersService {
     userCount: number;
   }>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {}
 
   getUsers(postsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
@@ -56,50 +57,65 @@ export class UsersService {
     return this.usersUpdated.asObservable();
   }
 
-  // getProduct(id: string) {
-  //   return this.http.get<{
-  //     _id: string;
-  //     name: string;
-  //     description: string;
-  //     imagePath: string;
-  //     genre: string;
-  //     price: number;
-  //   }>(BACKEND_URL + id);
-  // }
+  getUser() {
+    return this.http.get<{
+      _id: string;
+      firstName: string;
+      lastName: string;
+      email: string,
+      phoneNumber: string;
+      address: string;
+      state: string;
+      country: string;
+    }>(BACKEND_URL);
+  }
 
-  // updateProduct(
-  //   id: string,
-  //   title: string,
-  //   description: string,
-  //   genre: string,
-  //   price: number,
-  //   image: File | string
+  updateUser(
+    firstName: string,
+    lastName: string,
+    address: string,
+    phonenumber: string
+  ) {
+    //let productData: Product | FormData;
+
+     let userData = {
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        phoneNumber: phonenumber
+      }
+
+
+    console.log('UPDATE USER ', userData);
+
+    this.http.patch(BACKEND_URL + "updateMe", userData).subscribe((response) => {
+      this.router.navigate(["/"]);
+    });
+  }
+
+  // changePassword(
+  //   passwordCurrent: string,
+  //   password: string,
+  //   passwordConfirm: string
+
   // ) {
-  //   let productData: Product | FormData;
-  //   if (typeof image === 'object') {
-  //     productData = new FormData();
-  //     productData.append('id', id);
-  //     productData.append('title', title);
-  //     productData.append('description', description);
-  //     productData.append('genre', genre);
-  //     productData.append('price', price.toString());
-  //     productData.append('image', image, title);
-  //   }
-  //   else {
-  //     productData = {
-  //       id: id,
-  //       title: title,
-  //       description: description,
-  //       genre: genre,
-  //       price: price,
-  //       imagePath: image,
+  //   //let productData: Product | FormData;
+
+  //    let passwordData = {
+  //     passwordCurrent: passwordCurrent,
+  //     password: password,
+  //     passwordConfirm: passwordConfirm
   //     }
-  //   }
 
-  //   console.log(productData);
 
-  //   this.http.put(BACKEND_URL + id, productData).subscribe((response) => {
+  //   //console.log('UPDATE USER ', userData);
+
+  //   this.http.patch(BACKEND_URL + "updatepassword", passwordData).subscribe((response) => {
+  //     this.snackBar.open('Password changed sucessfully','', {
+  //       duration: 3000
+  //     });
   //     this.router.navigate(["/"]);
+
   //   });
   // }
 
@@ -112,6 +128,6 @@ export class UsersService {
     return this.http.get(BACKEND_URL + "reactivateuser/" + userId);
   }
 
-   
+
 
 }

@@ -16,20 +16,37 @@
   <div class="container">
     <div class="row block-9 justify-content-center">
       <div class="mb-5 col-md-6 order-md-last d-flex">
-        <form [formGroup] ="form" (submit)="onSaveProduct()" class="bg-white p-5 contact-form">
+        <form [formGroup]="form" (submit)="onSaveProduct()" class="bg-white p-5 contact-form">
           <h3 *ngIf="mode == 'create'" class="text-center">Add Product</h3>
           <h3 *ngIf="mode == 'edit'" class="text-center">Edit Product</h3>
           <div class="form-group">
             <label for="name" class="control-label">Product Name</label>
-            <input type="text" formControlName="title" class="form-control" placeholder="Product Name" required="required">
+            <input type="text" formControlName="title" class="form-control" placeholder="Product Name"
+              required="required">
+            <div
+              *ngIf="form.controls['title'].invalid && (form.controls['title'].dirty || form.controls['title'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="form.controls['title'].errors.required">
+                Title is required and min length is 3
+              </div>
+            </div>
+
           </div>
           <div class="form-group">
             <label for="price" class="control-label">Product Price</label>
-            <input type="number" formControlName="price"  class="form-control" placeholder="Product Price" required="required">
+            <input type="number" formControlName="price" class="form-control" placeholder="Product Price"
+              required="required">
+            <div
+              *ngIf="form.controls['price'].invalid && (form.controls['price'].dirty || form.controls['price'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="form.controls['price'].errors.required">
+                Price is required
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label for="image" class="control-label">Product Image</label>
-            <input type="file" #filePicker (change)="onImagePicked($event)"  class="form-control">
+            <input type="file" #filePicker (change)="onImagePicked($event)" class="form-control">
           </div>
           <div class="form-group image-preview" *ngIf="imagePreview !== '' && imagePreview">
             <img [src]="imagePreview" [alt]="form.value.title">
@@ -40,10 +57,25 @@
               <option value="" disabled>Choose your genre</option>
               <option *ngFor="let genre of Genre" [ngValue]="genre">{{genre}}</option>
             </select>
+            <div
+              *ngIf="form.controls['genre'].invalid && (form.controls['genre'].dirty || form.controls['genre'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="form.controls['genre'].errors.required">
+                Genre is required
+              </div>
+            </div>
           </div>
           <div class="form-group">
             <label for="description" class="control-label">Product Description</label>
-            <textarea formControlName="description" cols="30" rows="7" class="form-control" placeholder="Description"></textarea>
+            <textarea formControlName="description" cols="30" rows="7" class="form-control"
+              placeholder="Description"></textarea>
+              <div
+              *ngIf="form.controls['description'].invalid && (form.controls['description'].dirty || form.controls['description'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="form.controls['description'].errors.required">
+                Description is required
+              </div>
+            </div>
           </div>
           <div class="form-group text-center">
             <input *ngIf="mode == 'create'" type="submit" value="Add Product" class="btn btn-primary py-3 px-5">
@@ -57,4 +89,7 @@
 </section>
 
 <!-- loader -->
-<div *ngIf="isLoading"  id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<div *ngIf="isLoading" id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+    <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+    <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" />
+    </svg></div>

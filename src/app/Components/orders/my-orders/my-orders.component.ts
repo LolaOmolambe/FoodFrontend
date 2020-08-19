@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {OrdersService} from '../orders.service';
 import { PageEvent } from '@angular/material/paginator';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-my-orders',
@@ -22,31 +23,30 @@ export class MyOrdersComponent implements OnInit {
   private authStatusSub: Subscription;
   userIsAdmin: string;
 
-  constructor(public orderService: OrdersService) {}
+  constructor(public orderService: OrdersService, private authService: AuthService) {}
 
   ngOnInit() {
     this.isLoading = true;
     this.orderService.getPersonalOrders(this.postsPerPage, this.currentPage);
-    //this.userId = this.authService.getUserId();
-    //this.userIsAdmin = this.authService.getRole();
+    this.userId = this.authService.getUserId();
+    this.userIsAdmin = this.authService.getRole();
     this.ordersSub = this.orderService
       .getOrderUpdateListener()
       .subscribe((ordersData: { orders: any[]; orderCount: number }) => {
-        // .subscribe((postData: { posts: Post[]; postCount: number }) => {
         this.isLoading = false;
         this.orders = ordersData.orders;
         this.totalOrders = ordersData.orderCount;
         console.log(this.totalOrders);
       });
-    //this.userIsAuthenticated = this.authService.getIsAuth();
-    // this.authStatusSub = this.authService
-    //   .getAuthStatusListener()
-    //   .subscribe((isAuthenticated) => {
-    //     this.userIsAuthenticated = isAuthenticated;
-    //     this.userId = this.authService.getUserId();
-    //     this.userIsAdmin = this.authService.getRole();
-    //     console.log(this.userIsAdmin);
-    //   });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
+        this.userIsAdmin = this.authService.getRole();
+        console.log(this.userIsAdmin);
+      });
   }
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;

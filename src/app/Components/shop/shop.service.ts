@@ -78,13 +78,18 @@ export class ShopService {
       total,
     };
     this.http
-      .post<{ message: string; status: string }>(BACKEND_URL, productData)
+      .post<{ message: string; status: string; orderId: string }>(
+        BACKEND_URL,
+        productData
+      )
       .subscribe((responseData) => {
         console.log(responseData);
         //console.log("donnnnnn");
         if (responseData.status === 'success') {
-          localStorage.removeItem('cartItems');
-          this.router.navigate(['thankyou']);
+          this.payOrders(responseData.orderId);
+
+          //localStorage.removeItem('cartItems');
+          //this.router.navigate(['thankyou']);
         }
       });
   }
@@ -98,4 +103,40 @@ export class ShopService {
   getCountOfCart() {
     return this.simpleObservables;
   }
+
+  payOrders(orderId) {
+    this.http
+      .get<{ session; status: string }>(
+        BACKEND_URL + 'checkout-session/' + orderId
+      )
+      .subscribe((responseData) => {
+        console.log(responseData);
+        //console.log("donnnnnn");
+        stripe.redirectToCheckout({
+          sessionId: responseData.session.id,
+        });
+        // if (responseData.status === 'success') {
+        //   localStorage.removeItem('cartItems');
+        //   this.router.navigate(['thankyou']);
+        // }
+      });
+  }
+
+  updateProduct(orderId: string, status: string) {
+    let statusData = {
+      status: status,
+    };
+
+    console.log(statusData);
+
+    this.http
+      .put<{ status: string; message: string }>(BACKEND_URL + orderId, statusData)
+      .subscribe((response) => {
+        if (response.status == 'success') {
+          this.router.navigate(['/']);
+        }
+        //this.router.navigate(['/']);
+      });
+  }
 }
+

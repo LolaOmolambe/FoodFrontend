@@ -17,14 +17,23 @@
           <div class="form-group">
             <input type="text" ngModel #firstNameInput="ngModel" required="required" class="form-control"
               placeholder="Your First Name" name="firstName">
+              <span class="text-danger" *ngIf="(firstNameInput.touched || signupForm.submitted) && firstNameInput.errors?.required">
+                First Name is required
+              </span>
           </div>
           <div class="form-group">
             <input type="text" ngModel #lastNameInput="ngModel" required="required" class="form-control"
               placeholder="Your Last Name" name="lastName">
+              <span class="text-danger" *ngIf="(lastNameInput.touched || signupForm.submitted) && lastNameInput.errors?.required">
+                Last Name is required
+              </span>
           </div>
           <div class="form-group">
             <input type="email" ngModel name="email" #emailInput="ngModel" class="form-control" placeholder="Your Email"
               required="required">
+              <span class="text-danger" *ngIf="(emailInput.touched || signupForm.submitted) && emailInput.errors?.required">
+                Email is required
+              </span>
           </div>
           <div class="form-group">
             <input type="password" name="password" ngModel #passwordInput="ngModel" class="form-control"

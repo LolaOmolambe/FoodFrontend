@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   constructor(public authService: AuthService) {}
   ngOnInit() {
-    //console.log("ngoninit");
+    console.log("ngoninit");
     this.googleSDK();
     //throw new Error('Method not implemented.');
   }

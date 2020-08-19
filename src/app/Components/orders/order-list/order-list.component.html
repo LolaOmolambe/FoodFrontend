@@ -25,6 +25,7 @@
                 <th>Date Created</th>
                 <th>Date Updated</th>
                 <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -45,10 +46,11 @@
                 </td>
                 <td>{{ order.createdAt | date:'medium'}}</td>
                 <td>{{ order.updatedAt | date: 'medium'}}</td>
-                <!-- <td>
-                  <a [routerLink]="['/edit', product.id]" class="btn btn-primary">Edit</a>
+                <td>
+                  <a *ngIf="order.status != 'Completed'" [routerLink]="['/updateOrder', order.id]"
+                    class="btn btn-primary">Edit</a>
 
-                </td> -->
+                </td>
               </tr><!-- END TR-->
 
             </tbody>

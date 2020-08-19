@@ -31,6 +31,7 @@ export class OrdersService {
           return {
             orders: orderData.orders.map((order) => {
               return {
+                id: order._id,
                 firstName: order.customer.firstName,
                 lastName: order.customer.lastName,
                 email: order.customer.email,
@@ -88,6 +89,32 @@ export class OrdersService {
           orders: [...this.orders],
           orderCount: transformedOrderData.maxOrders,
         });
+      });
+  }
+
+  getOrder(orderId: string) {
+    return this.http.get<{
+      _id: string;
+      grandTotal: number;
+      status: string;
+
+    }>(BACKEND_URL + orderId);
+  }
+
+  updateOrder(orderId: string, status: string) {
+    let statusData = {
+      status: status,
+    };
+
+    console.log(statusData);
+
+    this.http
+      .put<{ status: string; message: string }>(BACKEND_URL + orderId, statusData)
+      .subscribe((response) => {
+        if (response.status == 'success') {
+          this.router.navigate(['/orderlist']);
+        }
+        //this.router.navigate(['/']);
       });
   }
 }

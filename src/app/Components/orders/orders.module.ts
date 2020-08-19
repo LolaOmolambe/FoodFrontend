@@ -8,12 +8,14 @@ import { AngularMaterialModule } from "../../angular-material.component";
 
 import { OrderListComponent } from './order-list/order-list.component';
 import {MyOrdersComponent} from './my-orders/my-orders.component';
+import { OrderUpdateComponent } from './order-update/order-update.component';
 
 @NgModule
 ({
   declarations: [
     OrderListComponent,
-    MyOrdersComponent
+    MyOrdersComponent,
+    OrderUpdateComponent
   ],
   imports: [
     CommonModule,

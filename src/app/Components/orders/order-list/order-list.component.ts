@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { OrdersService } from '../orders.service';
+import {AuthService} from '../../auth/auth.service';
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -12,7 +13,7 @@ export class OrderListComponent implements OnInit {
   orders = [];
   isLoading = false;
   totalOrders = 0;
-  postsPerPage = 5;
+  postsPerPage = 10;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   userIsAuthenticated = false;
@@ -21,31 +22,30 @@ export class OrderListComponent implements OnInit {
   private authStatusSub: Subscription;
   userIsAdmin: string;
 
-  constructor(public orderService: OrdersService) {}
+  constructor(public orderService: OrdersService, private authService: AuthService) {}
 
   ngOnInit() {
     this.isLoading = true;
     this.orderService.getOrders(this.postsPerPage, this.currentPage);
-    //this.userId = this.authService.getUserId();
-    //this.userIsAdmin = this.authService.getRole();
+    this.userId = this.authService.getUserId();
+    this.userIsAdmin = this.authService.getRole();
     this.ordersSub = this.orderService
       .getOrderUpdateListener()
       .subscribe((ordersData: { orders: any[]; orderCount: number }) => {
-        // .subscribe((postData: { posts: Post[]; postCount: number }) => {
         this.isLoading = false;
         this.orders = ordersData.orders;
         this.totalOrders = ordersData.orderCount;
         console.log(this.totalOrders);
       });
-    //this.userIsAuthenticated = this.authService.getIsAuth();
-    // this.authStatusSub = this.authService
-    //   .getAuthStatusListener()
-    //   .subscribe((isAuthenticated) => {
-    //     this.userIsAuthenticated = isAuthenticated;
-    //     this.userId = this.authService.getUserId();
-    //     this.userIsAdmin = this.authService.getRole();
-    //     console.log(this.userIsAdmin);
-    //   });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
+        this.userIsAdmin = this.authService.getRole();
+        console.log(this.userIsAdmin);
+      });
   }
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;

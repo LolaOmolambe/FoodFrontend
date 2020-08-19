@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { AuthData } from './auth-data.model';
 
 const BACKEND_URL = environment.apiUrl + '/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
 //const GOOGLE_BACKEND_URL = environment.apiUrl + ""
 
 @Injectable({ providedIn: 'root' })
@@ -18,7 +19,7 @@ export class AuthService {
   private userRole: string;
   private authStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {}
 
   getToken() {
     return this.token;
@@ -220,5 +221,41 @@ export class AuthService {
           this.authStatusListener.next(false);
         }
       );
+  }
+
+  changePassword(
+    passwordCurrent: string,
+    password: string,
+    passwordConfirm: string
+
+  ) {
+    //let productData: Product | FormData;
+
+     let passwordData = {
+      passwordCurrent: passwordCurrent,
+      password: password,
+      passwordConfirm: passwordConfirm
+      }
+
+
+    //console.log('UPDATE USER ', userData);
+
+    this.http.patch(BACKEND_URL + "/updatepassword", passwordData).subscribe((response) => {
+      this.snackBar.open('Password changed sucessfully','', {
+        duration: 3000
+      });
+      this.token = null;
+    this.isAuthenticated = false;
+    this.authStatusListener.next(false);
+    this.userId = null;
+    this.userRole = null;
+
+    clearTimeout(this.tokenTimer);
+    this.clearAuthData();
+    this.router.navigate(['login']);
+      //this.logout();
+      //this.router.navigate(["/"]);
+
+    });
   }
 }

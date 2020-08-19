@@ -14,10 +14,13 @@ import { CheckoutComponent } from './Components/shop/checkout/checkout.component
 import { AuthGuard } from './Components/auth/auth.guard';
 import { ThankYouComponent } from '../app/Components/shop/thank-you/thank-you.component';
 import {MyOrdersComponent} from '../app/Components/orders/my-orders/my-orders.component';
+import {OrderUpdateComponent} from '../app/Components/orders/order-update/order-update.component';
+import { UserAccountComponent } from "../app/Components/user/user-account/user-account.component";
 //import {StripePaymentComponent} from './Components/shop/stripe-payment/stripe-payment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   {
@@ -44,8 +47,15 @@ const routes: Routes = [
   { path: 'shoplist', component: ShopListComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
-  { path: 'thankyou', component: ThankYouComponent },
+  { path: 'thankyou/:orderId', component: ThankYouComponent, canActivate: [AuthGuard] },
   { path: 'myorders', component: MyOrdersComponent, canActivate: [AuthGuard] },
+  { path: 'updateOrder/:orderId', component: OrderUpdateComponent, canActivate: [AuthGuard] },
+  { path: 'useraccount', component: UserAccountComponent, canActivate: [AuthGuard]  },
+  {
+    path: '**', // bonus: all routes not defined forward to /home
+    redirectTo: 'home'
+  }
+
   //{ path: 'stripe', component: StripePaymentComponent}
 ];
 
