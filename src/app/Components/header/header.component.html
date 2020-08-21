@@ -14,8 +14,6 @@
             aria-expanded="false">Shop</a>
           <div class="dropdown-menu" aria-labelledby="dropdown04">
             <a class="dropdown-item" routerLink="/shoplist">Menu</a>
-            <!-- <a class="dropdown-item" href="wishlist.html">Wishlist</a>
-            <a class="dropdown-item" href="product-single.html">Single Product</a> -->
             <a class="dropdown-item" routerLink="/cart">Cart</a>
             <!-- <a class="dropdown-item" routerLink="/checkout">Checkout</a> -->
             <a class="dropdown-item" routerLink="/myorders">Orders</a>
@@ -29,12 +27,10 @@
             <a class="dropdown-item" routerLink="/productlist">Product List</a>
             <a class="dropdown-item" routerLink="/orderlist">Manage Orders</a>
             <a class="dropdown-item" routerLink="/userlist">Users</a>
-            <!-- <a class="dropdown-item" href="checkout.html">Checkout</a>  -->
+            <a class="dropdown-item" routerLink="/report">Report</a>
           </div>
         </li>
-        <!-- <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-        <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li> -->
+        <li class="nav-item"><a routerLink="/contact" class="nav-link">Contact</a></li>
         <li class="nav-item cta cta-colored"><a routerLink="/cart" class="nav-link"><span
               class="icon-shopping_cart"></span>{{cartcount}}</a></li>
 
@@ -42,7 +38,8 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item"><a *ngIf="!userIsAuthenticated" class="nav-link" routerLink="/login">Login</a></li>
         <li class="nav-item"><a *ngIf="!userIsAuthenticated" class="nav-link" routerLink="/signup">Sign Up</a></li>
-        <li class="nav-item"><a *ngIf="userIsAuthenticated" class="nav-link cursor" routerLink="/useraccount">My Account</a></li>
+        <li class="nav-item"><a *ngIf="userIsAuthenticated" class="nav-link cursor" routerLink="/useraccount">My
+            Account</a></li>
         <li class="nav-item"><a *ngIf="userIsAuthenticated" class="nav-link cursor" (click)="onLogout()">Logout</a></li>
       </ul>
     </div>

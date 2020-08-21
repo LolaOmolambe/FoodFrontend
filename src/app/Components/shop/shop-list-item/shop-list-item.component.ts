@@ -17,9 +17,12 @@ export class ShopListItemComponent implements OnInit {
 
   openSnackBar() {
     this.snackBar.open('Item added to cart','', {
-      duration: 3000
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: 'notif-success'
     });
   }
+
 
   handleAddToCart() {
     this.shopService.sendMsg(this.productItem);

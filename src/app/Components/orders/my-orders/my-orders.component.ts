@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {OrdersService} from '../orders.service';
 import { PageEvent } from '@angular/material/paginator';
@@ -9,7 +9,7 @@ import {AuthService} from '../../auth/auth.service';
   templateUrl: './my-orders.component.html',
   styleUrls: ['./my-orders.component.css']
 })
-export class MyOrdersComponent implements OnInit {
+export class MyOrdersComponent implements OnInit, OnDestroy{
 
   orders = [];
   isLoading = false;
@@ -28,8 +28,9 @@ export class MyOrdersComponent implements OnInit {
   ngOnInit() {
     this.authStatusSub = this.authService
     .getAuthStatusListener()
-    .subscribe(authStatus => {
+    .subscribe(isAuthenticated => {
       this.isLoading = false;
+      this.userIsAuthenticated = isAuthenticated;
     });
     this.isLoading = true;
     this.orderService.getPersonalOrders(this.postsPerPage, this.currentPage);
@@ -44,20 +45,17 @@ export class MyOrdersComponent implements OnInit {
         console.log(this.totalOrders);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
-    // this.authStatusSub = this.authService
-    //   .getAuthStatusListener()
-    //   .subscribe((isAuthenticated) => {
-    //     this.userIsAuthenticated = isAuthenticated;
-    //     this.userId = this.authService.getUserId();
-    //     this.userIsAdmin = this.authService.getRole();
-    //     console.log(this.userIsAdmin);
-    //   });
+
   }
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
     this.orderService.getPersonalOrders(this.postsPerPage, this.currentPage);
+  }
+  ngOnDestroy(): void {
+    this.ordersSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 
 }

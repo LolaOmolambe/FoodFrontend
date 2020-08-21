@@ -20,6 +20,14 @@ export class UsersService {
 
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {}
 
+  openSnackBar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: 'notif-success',
+    });
+  }
+
   getUsers(postsPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
     this.http
@@ -89,35 +97,10 @@ export class UsersService {
     console.log('UPDATE USER ', userData);
 
     this.http.patch(BACKEND_URL + "updateMe", userData).subscribe((response) => {
+      this.openSnackBar("User Details Updated");
       this.router.navigate(["/"]);
     });
   }
-
-  // changePassword(
-  //   passwordCurrent: string,
-  //   password: string,
-  //   passwordConfirm: string
-
-  // ) {
-  //   //let productData: Product | FormData;
-
-  //    let passwordData = {
-  //     passwordCurrent: passwordCurrent,
-  //     password: password,
-  //     passwordConfirm: passwordConfirm
-  //     }
-
-
-  //   //console.log('UPDATE USER ', userData);
-
-  //   this.http.patch(BACKEND_URL + "updatepassword", passwordData).subscribe((response) => {
-  //     this.snackBar.open('Password changed sucessfully','', {
-  //       duration: 3000
-  //     });
-  //     this.router.navigate(["/"]);
-
-  //   });
-  // }
 
    deleteUser(userId: string) {
      //console.log(userId);
@@ -126,6 +109,24 @@ export class UsersService {
    reactivateUser(userId: string) {
     //console.log(userId);
     return this.http.get(BACKEND_URL + "reactivateuser/" + userId);
+  }
+
+  contactUsFunction(name: string, email: string, subject: string, message: string) {
+    let emailBody = {
+      name,
+      email,
+      subject,
+      message
+    }
+
+    this.http
+      .post(BACKEND_URL + 'contact', emailBody)
+      .subscribe((response) => {
+        this.openSnackBar('Email sent successfully')
+
+
+        this.router.navigate(["contact"]);
+      });
   }
 
 

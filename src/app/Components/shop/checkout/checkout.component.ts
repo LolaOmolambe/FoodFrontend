@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ShopService } from '../shop.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
@@ -8,7 +8,7 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css'],
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
   cartTotal = 0;
   isLoading = false;
   cartObj = [];
@@ -48,5 +48,10 @@ export class CheckoutComponent implements OnInit {
     this.isLoading = true;
     this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
     this.shopService.addOrders(this.cartObj, this.cartTotal);
+  }
+
+  ngOnDestroy(): void {
+    //this.postsSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 }

@@ -13,9 +13,11 @@ import { CartComponent } from './Components/shop/cart/cart.component';
 import { CheckoutComponent } from './Components/shop/checkout/checkout.component';
 import { AuthGuard } from './Components/auth/auth.guard';
 import { ThankYouComponent } from '../app/Components/shop/thank-you/thank-you.component';
-import {MyOrdersComponent} from '../app/Components/orders/my-orders/my-orders.component';
-import {OrderUpdateComponent} from '../app/Components/orders/order-update/order-update.component';
-import { UserAccountComponent } from "../app/Components/user/user-account/user-account.component";
+import { MyOrdersComponent } from '../app/Components/orders/my-orders/my-orders.component';
+import { OrderUpdateComponent } from '../app/Components/orders/order-update/order-update.component';
+import { UserAccountComponent } from '../app/Components/user/user-account/user-account.component';
+import { ContactComponent } from '../app/Components/contact/contact.component';
+import { AdminReportComponent } from '../app/Components/admin/admin-report/admin-report.component';
 //import {StripePaymentComponent} from './Components/shop/stripe-payment/stripe-payment.component';
 
 const routes: Routes = [
@@ -47,14 +49,24 @@ const routes: Routes = [
   { path: 'shoplist', component: ShopListComponent },
   { path: 'cart', component: CartComponent },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
-  { path: 'thankyou/:orderId', component: ThankYouComponent},
+  { path: 'thankyou/:orderId', component: ThankYouComponent },
   { path: 'myorders', component: MyOrdersComponent, canActivate: [AuthGuard] },
-  { path: 'updateOrder/:orderId', component: OrderUpdateComponent, canActivate: [AuthGuard] },
-  { path: 'useraccount', component: UserAccountComponent, canActivate: [AuthGuard]  },
+  {
+    path: 'updateOrder/:orderId',
+    component: OrderUpdateComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'useraccount',
+    component: UserAccountComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'contact', component: ContactComponent },
+  { path: 'report', component: AdminReportComponent, canActivate: [AuthGuard] },
   {
     path: '**', // bonus: all routes not defined forward to /home
-    redirectTo: 'home'
-  }
+    redirectTo: 'home',
+  },
 
   //{ path: 'stripe', component: StripePaymentComponent}
 ];

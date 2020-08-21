@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductsService } from '../../Components/products/products.service';
 import { Subscription } from 'rxjs';
-
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
-
+export class HomeComponent implements OnInit, OnDestroy {
   products: any[] = [];
 
   isLoading = false;
@@ -20,11 +19,16 @@ export class HomeComponent implements OnInit {
   userIsAuthenticated = false;
   userId: string;
   private productsSub: Subscription;
-  //private authStatusSub: Subscription;
+  private authStatusSub: Subscription;
   userIsAdmin: string;
-  constructor(public productsService: ProductsService) { }
+  constructor(
+    public productsService: ProductsService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
+    console.log('home');
+
     this.isLoading = true;
     this.productsService.getProducts(this.postsPerPage, this.currentPage);
     //this.userId = this.authService.getUserId();
@@ -38,6 +42,18 @@ export class HomeComponent implements OnInit {
         this.totalProducts = productData.productCount;
         console.log(this.products);
       });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        console.log('home auth', isAuthenticated);
+        this.userIsAuthenticated = isAuthenticated;
+        console.log('home auth', isAuthenticated);
+      });
   }
 
+  ngOnDestroy() {
+    this.productsSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
+  }
 }

@@ -14,11 +14,12 @@
     <div class="row justify-content-center">
       <div class="col-md-10 mb-5 text-center">
         <ul class="product-category">
-          <li><a href="#" class="active">All</a></li>
-          <li><a href="#">Vegetables</a></li>
-          <li><a href="#">Fruits</a></li>
-          <li><a href="#">Juice</a></li>
-          <li><a href="#">Dried</a></li>
+          <!-- <li><a (click)="getProductsByCategory('all')" class="active">All</a></li> -->
+          <li><a (click)="getProductsByCategory('all', 1)" [ngClass]="{'active': tab==='tab1'}">All</a></li>
+          <li><a (click)="getProductsByCategory('Vegetables', 2)" [ngClass]="{'active': tab==='tab2'}" >Vegetables</a></li>
+          <li><a (click)="getProductsByCategory('Fruits', 3)" [ngClass]="{'active': tab==='tab3'}">Fruits</a></li>
+          <li><a (click)="getProductsByCategory('Juice', 4)" [ngClass]="{'active': tab==='tab4'}">Juice</a></li>
+          <li><a (click)="getProductsByCategory('Dried', 5)" [ngClass]="{'active': tab==='tab5'}">Dried</a></li>
         </ul>
       </div>
     </div>

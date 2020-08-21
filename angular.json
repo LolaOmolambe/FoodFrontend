@@ -43,8 +43,9 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.slim.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+
               "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/jquery-migrate/dist/jquery-migrate.min.js",
               "node_modules/jquery.easing/jquery.easing.min.js",
               "node_modules/jquery-waypoints/waypoints.min.js",
@@ -152,5 +153,6 @@
       }
     }
   },
-  "defaultProject": "foodclient"
+
+ "defaultProject": "foodclient"
 }

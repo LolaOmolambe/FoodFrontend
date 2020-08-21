@@ -17,6 +17,13 @@ export class ProductsService {
     productCount: number;
   }>();
 
+  private reportsUpdated = new Subject<{
+    //products: Product[];
+    productCount: number;
+    userCount: number;
+    orderCount: number;
+  }>();
+
   constructor(private http: HttpClient, private router: Router) {}
 
   getProducts(postsPerPage: number, currentPage: number) {
@@ -55,6 +62,10 @@ export class ProductsService {
 
   getProductsUpdateListener() {
     return this.productsUpdated.asObservable();
+  }
+
+  getReportsUpdateListener() {
+    return this.reportsUpdated.asObservable();
   }
 
   getProduct(id: string) {
@@ -105,8 +116,7 @@ export class ProductsService {
       productData.append('genre', genre);
       productData.append('price', price.toString());
       productData.append('image', image, title);
-    }
-    else {
+    } else {
       productData = {
         id: id,
         title: title,
@@ -114,14 +124,82 @@ export class ProductsService {
         genre: genre,
         price: price,
         imagePath: image,
-      }
+      };
     }
 
     console.log(productData);
 
     this.http.put(BACKEND_URL + id, productData).subscribe((response) => {
-      this.router.navigate(["/"]);
+      this.router.navigate(['/']);
     });
+  }
+
+  getProductsByParams(
+    postsPerPage: number,
+    currentPage: number,
+    genre: string
+  ) {
+    const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
+    let sortData = {
+      genre: genre,
+    };
+    this.http
+      .post<{ message: string; products: any; maxProducts: number }>(
+        BACKEND_URL + 'productsbygenre/' + queryParams,
+        sortData
+      )
+      .pipe(
+        map((productData) => {
+          return {
+            products: productData.products.map((product) => {
+              return {
+                name: product.name,
+                description: product.description,
+                id: product._id,
+                imagePath: product.imagePath,
+                genre: product.genre,
+                price: product.price,
+                createdAt: product.createdAt,
+                updatedAt: product.updatedAt,
+              };
+            }),
+            maxProducts: productData.maxProducts,
+          };
+        })
+      )
+      .subscribe((transformedPostData) => {
+        this.products = transformedPostData.products;
+        this.productsUpdated.next({
+          products: [...this.products],
+          productCount: transformedPostData.maxProducts,
+        });
+      });
+  }
+
+  getReports() {
+    this.http
+      .get<{
+        message: string;
+        userCount: number;
+        orderCount: number;
+        productCount: number;
+      }>(BACKEND_URL + 'adminreport')
+      .pipe(
+        map((reportData) => {
+          return {
+            userCount: reportData.userCount,
+            orderCount: reportData.orderCount,
+            productCount: reportData.productCount,
+          };
+        })
+      )
+      .subscribe((transformedPostData) => {
+        this.reportsUpdated.next({
+          productCount: transformedPostData.productCount,
+          userCount: transformedPostData.userCount,
+          orderCount: transformedPostData.orderCount
+        });
+      });
   }
 
   // deletePost(postId: string) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -11,12 +11,12 @@ import {ShopService} from '../../shop/shop.service';
   templateUrl: './order-update.component.html',
   styleUrls: ['./order-update.component.css'],
 })
-export class OrderUpdateComponent implements OnInit {
+export class OrderUpdateComponent implements OnInit, OnDestroy{
   order;
   isLoading = false;
   form: FormGroup;
   imagePreview: string;
-  Status: any = ['Processing', 'Completed'];
+  Status: any = ['Paid','Cancelled','Processing', 'Completed'];
   public mode = 'create';
   private orderId: string;
   private authStatusSub: Subscription;
@@ -56,13 +56,7 @@ export class OrderUpdateComponent implements OnInit {
 
             this.form.setValue({
               status: this.order.status,
-              // description: this.product.description,
-              // image: this.product.imagePath,
-              // genre: this.product.genre,
-              // price: this.product.price,
             });
-            //this.imagePreview = this.product.imagePath;
-            //console.log("img ", this.product.imagePath);
           });
       } else {
         this.mode = 'create';

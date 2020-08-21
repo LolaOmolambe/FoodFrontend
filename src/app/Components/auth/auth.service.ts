@@ -17,24 +17,37 @@ export class AuthService {
   private tokenTimer: any;
   private userId: string;
   private userRole: string;
+
   private authStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {}
+  private loggedInStatus =
+    JSON.parse(localStorage.getItem('isLoggedIn')) || false;
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   getToken() {
-    return this.token;
+    //return this.token;
+    return localStorage.getItem('token');
   }
 
   getIsAuth() {
-    return this.isAuthenticated;
+    return JSON.parse(localStorage.getItem('isLoggedIn'));
+    //return localStorage.getItem('isLoggedIn');
+    //return this.isAuthenticated;
   }
 
   getUserId() {
-    return this.userId;
+    //return this.userId;
+    return localStorage.getItem('userId');
   }
 
   getRole() {
-    return this.userRole;
+    //return this.userRole;
+    return localStorage.getItem('userRole') || this.userRole;
   }
 
   getAuthStatusListener() {
@@ -57,12 +70,20 @@ export class AuthService {
     };
     this.http.post(BACKEND_URL + '/signup', authData).subscribe(
       () => {
+        this.openSnackBar("Sign up Sucessfull")
         this.router.navigate(['login']);
       },
       (error) => {
         this.authStatusListener.next(false);
       }
     );
+  }
+  openSnackBar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: 'notif-success',
+    });
   }
 
   login(email: string, password: string) {
@@ -79,26 +100,30 @@ export class AuthService {
           const token = response.token;
           this.token = token;
           if (token) {
+            this.authStatusListener.next(true);
             const expiresInDuration = response.expiresIn;
             this.setAuthTimer(expiresInDuration);
             this.isAuthenticated = true;
             this.userId = response.userId;
             this.userRole = response.userRole;
-            console.log(this.userRole);
-            this.authStatusListener.next(true);
+            //this.userRole = response.userRole;
+            //console.log(this.userRole);
+
+            //this.setLoggedIsStatus(true);
             const now = new Date();
             const expirationDate = new Date(
               now.getTime() + expiresInDuration * 1000
             );
-            console.log(expirationDate);
-            console.log(response.token);
+            //console.log(expirationDate);
+            //console.log(response.token);
             this.saveAuthData(
               token,
               expirationDate,
               this.userId,
               this.userRole
             );
-            this.router.navigate(['']);
+            this.openSnackBar('Login Successful');
+            this.router.navigate(['/']);
             //this.router.navigate(["postlist"]);
           }
         },
@@ -154,6 +179,7 @@ export class AuthService {
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
     localStorage.setItem('userRole', userRole);
+    localStorage.setItem('isLoggedIn', 'true');
   }
 
   private clearAuthData() {
@@ -162,6 +188,8 @@ export class AuthService {
     localStorage.removeItem('userId');
     localStorage.removeItem('userRole');
     localStorage.removeItem('cartItems');
+    //localStorage.removeItem('isLoggedIn');
+    localStorage.setItem('isLoggedIn', 'false');
   }
 
   private getAuthData() {
@@ -213,8 +241,9 @@ export class AuthService {
               this.userId,
               this.userRole
             );
+            this.openSnackBar('Login Successful');
             this.router.navigate(['']);
-            //this.router.navigate(["postlist"]);
+
           }
         },
         (error) => {
@@ -227,35 +256,32 @@ export class AuthService {
     passwordCurrent: string,
     password: string,
     passwordConfirm: string
-
   ) {
     //let productData: Product | FormData;
 
-     let passwordData = {
+    let passwordData = {
       passwordCurrent: passwordCurrent,
       password: password,
-      passwordConfirm: passwordConfirm
-      }
-
+      passwordConfirm: passwordConfirm,
+    };
 
     //console.log('UPDATE USER ', userData);
 
-    this.http.patch(BACKEND_URL + "/updatepassword", passwordData).subscribe((response) => {
-      this.snackBar.open('Password changed sucessfully','', {
-        duration: 3000
+    this.http
+      .patch(BACKEND_URL + '/updatepassword', passwordData)
+      .subscribe((response) => {
+        this.openSnackBar('Password changed successfully')
+        this.token = null;
+        this.isAuthenticated = false;
+        this.authStatusListener.next(false);
+        this.userId = null;
+        this.userRole = null;
+
+        clearTimeout(this.tokenTimer);
+        this.clearAuthData();
+        this.router.navigate(['login']);
+        //this.logout();
+        //this.router.navigate(["/"]);
       });
-      this.token = null;
-    this.isAuthenticated = false;
-    this.authStatusListener.next(false);
-    this.userId = null;
-    this.userRole = null;
-
-    clearTimeout(this.tokenTimer);
-    this.clearAuthData();
-    this.router.navigate(['login']);
-      //this.logout();
-      //this.router.navigate(["/"]);
-
-    });
   }
 }

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-center">
       <div class="col-md-9 ftco-animate text-center">
-        <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span></span></p>
+        <p class="breadcrumbs"><span class="mr-2"><a [routerLink]="['']">Home</a></span> <span></span></p>
         <h1 class="mb-0 bread">My Cart</h1>
       </div>
     </div>
@@ -14,8 +14,8 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 ftco-animate">
-        <div class="alert alert-info" *ngIf="cartObj === null">No Items Added</div>
-        <div class="cart-list" *ngIf="cartObj !== null">
+        <div class="alert alert-info" *ngIf="cartObj.length == 0">No Items In Cart</div>
+        <div class="cart-list" *ngIf="cartObj.length != 0">
           <table class="table">
             <thead class="thead-primary">
               <tr class="text-center">
@@ -60,7 +60,7 @@
         </div>
       </div>
     </div>
-    <div class="row justify-content-end">
+    <div class="row justify-content-end" *ngIf="cartObj.length != 0" >
       <!-- <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
         <div class="cart-total mb-3">
           <h3>Coupon Code</h3>
@@ -117,7 +117,6 @@
           </p>
         </div>
         <p><a (click)="proceedToCheckout()" *ngIf="cartObj !== null" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
-        <!-- <p><a (click)="createOrder()" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p> -->
       </div>
     </div>
   </div>

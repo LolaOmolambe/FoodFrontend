@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ProductsService } from '../products.service';
@@ -12,7 +12,7 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './product-create.component.html',
   styleUrls: ['./product-create.component.css'],
 })
-export class ProductCreateComponent implements OnInit {
+export class ProductCreateComponent implements OnInit, OnDestroy {
   product: Product;
   isLoading = false;
   form: FormGroup;

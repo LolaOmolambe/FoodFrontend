@@ -9,7 +9,7 @@ import { PageEvent } from '@angular/material/paginator';
   templateUrl: './order-list.component.html',
   styleUrls: ['./order-list.component.css'],
 })
-export class OrderListComponent implements OnInit {
+export class OrderListComponent implements OnInit, OnDestroy {
   orders = [];
   isLoading = false;
   totalOrders = 0;
@@ -26,6 +26,15 @@ export class OrderListComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuthenticated) => {
+        this.userIsAuthenticated = isAuthenticated;
+        this.userId = this.authService.getUserId();
+        this.userIsAdmin = this.authService.getRole();
+        console.log(this.userIsAdmin);
+      });
     this.orderService.getOrders(this.postsPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
     this.userIsAdmin = this.authService.getRole();
@@ -38,20 +47,25 @@ export class OrderListComponent implements OnInit {
         console.log(this.totalOrders);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
-    this.authStatusSub = this.authService
-      .getAuthStatusListener()
-      .subscribe((isAuthenticated) => {
-        this.userIsAuthenticated = isAuthenticated;
-        this.userId = this.authService.getUserId();
-        this.userIsAdmin = this.authService.getRole();
-        console.log(this.userIsAdmin);
-      });
+    // this.authStatusSub = this.authService
+    //   .getAuthStatusListener()
+    //   .subscribe((isAuthenticated) => {
+    //     this.userIsAuthenticated = isAuthenticated;
+    //     this.userId = this.authService.getUserId();
+    //     this.userIsAdmin = this.authService.getRole();
+    //     console.log(this.userIsAdmin);
+    //   });
   }
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.postsPerPage = pageData.pageSize;
     this.orderService.getOrders(this.postsPerPage, this.currentPage);
+  }
+
+  ngOnDestroy(): void {
+    this.ordersSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 
 }

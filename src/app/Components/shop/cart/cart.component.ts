@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ShopService } from '../shop.service';
 import { AuthService } from 'src/app/Components/auth/auth.service';
 import { Subscription, Subject } from 'rxjs';
@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   cartItems = [];
   cartTotal = 0;
   cartObj = [];
@@ -33,14 +33,15 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
     this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
+    console.log("length ", typeof this.cartObj);
     if (this.cartObj != null) {
-      console.log(this.cartObj.length);
+      //console.log(this.cartObj.length);
       this.cartTotal = 0;
       this.cartObj.forEach((item) => {
         this.cartTotal += item.qty * item.price;
       });
-      console.log('total ', this.cartTotal);
-      console.log('local storage', this.cartObj);
+      //console.log('total ', this.cartTotal);
+      //console.log('local storage', this.cartObj);
     }
     //this.isLoading = true;
     this.userId = this.authService.getUserId();
@@ -53,13 +54,16 @@ export class CartComponent implements OnInit {
         this.userId = this.authService.getUserId();
         this.userIsAdmin = this.authService.getRole();
         this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
-        console.log(this.userIsAdmin);
+        //console.log(this.userIsAdmin);
       });
   }
 
+
   openSnackBar() {
     this.snackBar.open('Item removed from cart','', {
-      duration: 3000
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: 'notif-success'
     });
   }
 
@@ -100,5 +104,10 @@ export class CartComponent implements OnInit {
     } else {
       this.router.navigate(['checkout']);
     }
+  }
+
+  ngOnDestroy(): void {
+    //this.postsSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 }

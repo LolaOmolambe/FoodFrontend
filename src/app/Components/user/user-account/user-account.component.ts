@@ -1,23 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UsersService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
 import { FormGroup, FormControl, NgForm, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-account',
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.component.css'],
 })
-export class UserAccountComponent implements OnInit {
+export class UserAccountComponent implements OnInit, OnDestroy {
   user: any;
   form: FormGroup;
   isLoading = false;
+  private authStatusSub: Subscription;
   constructor(
     private userService: UsersService,
     private authService: AuthService
   ) {}
 
   ngOnInit() {
+    this.authStatusSub = this.authService
+    .getAuthStatusListener()
+    .subscribe(authStatus => {
+      this.isLoading = false;
+    });
     this.form = new FormGroup({
       firstName: new FormControl(null, { validators: [Validators.required] }),
       lastName: new FormControl(null, { validators: [Validators.required] }),
@@ -87,5 +94,9 @@ export class UserAccountComponent implements OnInit {
       form.value.password,
       form.value.passwordConfirm
     );
+  }
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
   }
 }

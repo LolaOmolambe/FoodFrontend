@@ -4,7 +4,7 @@
     duration: 800,
     easing: 'slide'
   });
-  console.log("aos");
+
 
  "use strict";
 
@@ -260,7 +260,6 @@
      }
    });
    $('body').on('activate.bs.scrollspy', function () {
-     console.log('nice');
    })
  };
  OnePageNav();
@@ -300,7 +299,6 @@
 
 
  var goHere = function() {
-console.log("goHere");
    $('.mouse-icon').on('click', function(event){
 
      event.preventDefault();
@@ -343,7 +341,16 @@ console.log("goHere");
 
 setInterval(function() { makeTimer(); }, 100);
 
+ $('.navbar-collapse a').click(function(){
+   console.log("navbar");
+   $(".navbar-collapse").collapse('hide');
+ });
 
 
 })(jQuery);
+
+
+
+
+
 

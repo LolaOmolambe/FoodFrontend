@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
 import { ShopService } from '../shop.service';
@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './thank-you.component.html',
   styleUrls: ['./thank-you.component.css'],
 })
-export class ThankYouComponent implements OnInit {
+export class ThankYouComponent implements OnInit, OnDestroy {
   private orderId: string;
   private authStatusSub: Subscription;
   isLoading = false;
@@ -36,7 +36,7 @@ export class ThankYouComponent implements OnInit {
     this.userId = this.authService.getUserId();
     this.userIsAdmin = this.authService.getRole();
     this.userIsAuthenticated = this.authService.getIsAuth();
-    
+
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('orderId')) {
         //this.mode = 'edit';
@@ -50,5 +50,10 @@ export class ThankYouComponent implements OnInit {
         // this.productId = null;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    //this.postsSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 }

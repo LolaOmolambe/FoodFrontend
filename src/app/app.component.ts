@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
-import * as AOS from 'aos';
+declare var $: any;
 
 
 @Component({
@@ -13,10 +13,14 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    AOS.init({
-      duration: 800,
-      easing: 'slide'
-    });
+    // $('.navbar-collapse a').click(function(){
+    //   console.log("navbar");
+    //   $(".navbar-collapse").collapse('hide');
+    // });
+    // AOS.init({
+    //   duration: 800,
+    //   easing: 'slide'
+    // });
   }
 }
 

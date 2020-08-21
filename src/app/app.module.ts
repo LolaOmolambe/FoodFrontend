@@ -22,6 +22,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorComponent } from '../error/error.component';
 import { ErrorInterceptor } from './error-interceptor';
 import { HomeProductsComponent } from './Components/home-products/home-products.component';
+import { ContactComponent } from './Components/contact/contact.component';
+import { AdminReportComponent } from './Components/admin/admin-report/admin-report.component';
 //import { CartItemComponent } from './Components/Cart/cart-item/cart-item.component';
 //import { UserListComponent } from './Components/User/user-list/user-list.component';
 //import { ShopListComponent } from './Components/shop/shop-list/shop-list.component';
@@ -36,8 +38,9 @@ import { HomeProductsComponent } from './Components/home-products/home-products.
     HeaderComponent,
     FooterComponent,
     ErrorComponent,
-    HomeProductsComponent
-
+    HomeProductsComponent,
+    ContactComponent,
+    AdminReportComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,6 @@ import { HomeProductsComponent } from './Components/home-products/home-products.
     OrdersModule,
     UsersModule,
     ShopModule,
-
     BrowserAnimationsModule,
   ],
   providers: [
