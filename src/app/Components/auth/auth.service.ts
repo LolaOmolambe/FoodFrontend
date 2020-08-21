@@ -47,7 +47,7 @@ export class AuthService {
 
   getRole() {
     //return this.userRole;
-    return localStorage.getItem('userRole') || this.userRole;
+    return localStorage.getItem('userRole');
   }
 
   getAuthStatusListener() {
@@ -100,7 +100,7 @@ export class AuthService {
           const token = response.token;
           this.token = token;
           if (token) {
-            this.authStatusListener.next(true);
+
             const expiresInDuration = response.expiresIn;
             this.setAuthTimer(expiresInDuration);
             this.isAuthenticated = true;
@@ -108,6 +108,8 @@ export class AuthService {
             this.userRole = response.userRole;
             //this.userRole = response.userRole;
             //console.log(this.userRole);
+            localStorage.setItem('userRole', this.userRole);
+            this.authStatusListener.next(true);
 
             //this.setLoggedIsStatus(true);
             const now = new Date();

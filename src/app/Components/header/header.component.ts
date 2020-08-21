@@ -21,11 +21,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // $('.navbar-collapse a').click(function(){
-    //   console.log("navbar");
-    //   $(".navbar-collapse").collapse('hide');
-    // });
-
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.userIsAdmin = this.authService.getRole();
     console.log('role ', this.userIsAdmin);
