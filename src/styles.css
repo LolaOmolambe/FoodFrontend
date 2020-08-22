@@ -10026,3 +10026,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       color: #155724 !important;
   } */
 }
+
+.custom-modalbox >  mat-dialog-container {
+  border-radius: 15px !important;
+  color: white !important;
+  background-color: #82ae46 !important;
+  border-color: #c3e6cb !important;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  text-align: center;
+}
+
+
+

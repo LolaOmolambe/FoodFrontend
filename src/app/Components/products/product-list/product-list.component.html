@@ -17,11 +17,9 @@
           <table class="table">
             <thead class="thead-primary">
               <tr class="text-center">
-                <!-- <th>&nbsp;</th> -->
                 <th>S/N</th>
                 <th>Name</th>
                 <th>&nbsp;</th>
-                <!-- <th>&nbsp;</th> -->
                 <th>Price</th>
                 <th>Genre</th>
                 <th>Date Created</th>
@@ -31,7 +29,6 @@
             </thead>
             <tbody>
               <tr class="text-center" *ngFor="let product of products; let ndx = index">
-                <!-- <td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td> -->
                 <td>{{ndx+1}}</td>
                 <td class="product-name">
                   {{product.name}}

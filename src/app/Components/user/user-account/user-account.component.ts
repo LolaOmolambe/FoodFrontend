@@ -44,7 +44,11 @@ export class UserAccountComponent implements OnInit, OnDestroy {
         state: userData.state,
         country: userData.country,
       };
-      console.log('user', this.user);
+      if (this.user.firstName == undefined) {
+        var emptyStringfirstName = '';
+      } else {
+        emptyStringfirstName = this.user.firstName;
+      }
       if (this.user.address == undefined) {
         var emptyStringaddress = '';
       } else {
@@ -57,7 +61,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
       }
 
       this.form.setValue({
-        firstName: this.user.firstName,
+        firstName: emptyStringfirstName,
         lastName: this.user.lastName,
         address: emptyStringaddress,
         phoneNumber: emptyStringnumber,
@@ -68,7 +72,6 @@ export class UserAccountComponent implements OnInit, OnDestroy {
   }
 
   onUpdateUser() {
-    console.log('invalid ', this.form.invalid);
     if (this.form.invalid) {
       return;
     }

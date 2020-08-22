@@ -45,14 +45,10 @@
                 <td>{{ user.createdAt | date:'medium'}}</td>
                 <td>{{ user.updatedAt | date: 'medium'}}</td>
                 <td>
-                  <!-- <button *ngIf="userIsAuthenticated &&  userIsAdmin == 'admin' " class="btn btn-danger"
-                    (click)="onDelete(user.id)">Deactivate</button> -->
                     <button class="btn btn-warning" *ngIf="[user.isActive] == 'true'"
                     (click)="onDelete(user.id)">Deactivate</button>
                     <button class="btn btn-success" *ngIf="[user.isActive] == 'false'"
                     (click)="onReativate(user.id)"><span>Reactivate</span></button>
-                  <!-- <a [routerLink]="['/edit', user.id]" class="btn btn-primary">Edit</a> -->
-
                 </td>
               </tr><!-- END TR-->
 

@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, NgZone } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +15,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   isLoading = false;
   private authStatusSub: Subscription;
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private ngZone: NgZone, private router: Router) {}
 
   ngOnInit() {
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
@@ -22,7 +23,8 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       }
     );
-    this.googleSDK();
+    //this.googleSDK();
+    this.ngZone.run(() => this.googleSDK());
 
   }
 
@@ -32,22 +34,16 @@ export class SignupComponent implements OnInit, OnDestroy {
       (googleUser) => {
 
         let profile = googleUser.getBasicProfile();
-        console.log('Token || ' + googleUser.getAuthResponse().id_token);
-        console.log('ID: ' + profile.getId());
-        console.log('Name: ' + profile.getName());
-        console.log('Image URL: ' + profile.getImageUrl());
-        console.log('Email: ' + profile.getEmail());
         let email = profile.getEmail();
         let firstname = profile.getName().split(" ")[0];
         let lastname = profile.getName().split(" ")[1];
-        console.log(email, firstname, lastname);
         //YOUR CODE HERE
         this.isLoading = true;
         this.authService.googlelogin(email, firstname, lastname);
-
+        this.ngZone.run(() => this.router.navigate(['/home'])).then();
 
       }, (error) => {
-        alert(JSON.stringify(error, undefined, 2));
+        this.ngZone.run(() => this.router.navigate(['/login'])).then();
       });
 
   }

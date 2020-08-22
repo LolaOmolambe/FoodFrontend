@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 
 import { LoginComponent } from "./login/login.component";
 import {AngularMaterialModule} from '../../angular-material.component';
-//import { SignupComponent } from "./signup/signup.component";
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

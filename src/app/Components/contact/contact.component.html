@@ -15,29 +15,34 @@
       <div class="col-md-6 order-md-last d-flex">
         <form (submit)="contactUs(sendMessageForm)" #sendMessageForm="ngForm" class="bg-white p-5 contact-form">
           <div class="form-group">
-            <input type="text" name="name" ngModel #nameInput="ngModel" class="form-control" placeholder="Your Name" required="required">
-            <span class="text-danger" *ngIf="(nameInput.touched || sendMessageForm.submitted) && nameInput.errors?.required">
+            <input type="text" name="name" ngModel #nameInput="ngModel" class="form-control" placeholder="Your Name"
+              required="required">
+            <span class="text-danger"
+              *ngIf="(nameInput.touched || sendMessageForm.submitted) && nameInput.errors?.required">
               Name is required
             </span>
           </div>
           <div class="form-group">
             <input type="email" name="email" ngModel #emailInput="ngModel" class="form-control" placeholder="Your Email"
               required="required">
-              <span class="text-danger" *ngIf="(emailInput.touched || sendMessageForm.submitted) && emailInput.errors?.required">
-                Email is required
-              </span>
+            <span class="text-danger"
+              *ngIf="(emailInput.touched || sendMessageForm.submitted) && emailInput.errors?.required">
+              Email is required
+            </span>
           </div>
           <div class="form-group">
             <input type="text" name="subject" ngModel #subjectInput="ngModel" class="form-control" placeholder="Subject"
-            required="required">
-            <span class="text-danger" *ngIf="(subjectInput.touched || sendMessageForm.submitted) && subjectInput.errors?.required">
+              required="required">
+            <span class="text-danger"
+              *ngIf="(subjectInput.touched || sendMessageForm.submitted) && subjectInput.errors?.required">
               Subject is required
             </span>
           </div>
           <div class="form-group">
-            <textarea name="message" ngModel #messageInput="ngModel" id="" cols="30" rows="7" class="form-control" placeholder="Message"
-            required="required"></textarea>
-            <span class="text-danger" *ngIf="(messageInput.touched || sendMessageForm.submitted) && messageInput.errors?.required">
+            <textarea name="message" ngModel #messageInput="ngModel" id="" cols="30" rows="7" class="form-control"
+              placeholder="Message" required="required"></textarea>
+            <span class="text-danger"
+              *ngIf="(messageInput.touched || sendMessageForm.submitted) && messageInput.errors?.required">
               Message Body is required
             </span>
           </div>
@@ -48,9 +53,6 @@
 
       </div>
 
-      <!-- <div class="col-md-6 d-flex">
-        <div id="map" class="bg-white"></div>
-      </div> -->
     </div>
   </div>
 </section>

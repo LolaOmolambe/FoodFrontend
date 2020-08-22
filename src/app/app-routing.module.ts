@@ -18,7 +18,6 @@ import { OrderUpdateComponent } from '../app/Components/orders/order-update/orde
 import { UserAccountComponent } from '../app/Components/user/user-account/user-account.component';
 import { ContactComponent } from '../app/Components/contact/contact.component';
 import { AdminReportComponent } from '../app/Components/admin/admin-report/admin-report.component';
-//import {StripePaymentComponent} from './Components/shop/stripe-payment/stripe-payment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -67,8 +66,6 @@ const routes: Routes = [
     path: '**', // bonus: all routes not defined forward to /home
     redirectTo: 'home',
   },
-
-  //{ path: 'stripe', component: StripePaymentComponent}
 ];
 
 @NgModule({

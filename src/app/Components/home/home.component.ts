@@ -27,28 +27,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log('home');
-
     this.isLoading = true;
     this.productsService.getProducts(this.postsPerPage, this.currentPage);
-    //this.userId = this.authService.getUserId();
-    //this.userIsAdmin = this.authService.getRole();
+    this.userId = this.authService.getUserId();
+    this.userIsAdmin = this.authService.getRole();
     this.productsSub = this.productsService
       .getProductsUpdateListener()
       .subscribe((productData: { products: any[]; productCount: number }) => {
-        // .subscribe((postData: { posts: Post[]; postCount: number }) => {
         this.isLoading = false;
         this.products = productData.products;
         this.totalProducts = productData.productCount;
-        console.log(this.products);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
-        console.log('home auth', isAuthenticated);
         this.userIsAuthenticated = isAuthenticated;
-        console.log('home auth', isAuthenticated);
       });
   }
 

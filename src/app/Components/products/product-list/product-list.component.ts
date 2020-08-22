@@ -41,11 +41,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.productsSub = this.productsService
       .getProductsUpdateListener()
       .subscribe((productData: { products: any[]; productCount: number }) => {
-        // .subscribe((postData: { posts: Post[]; postCount: number }) => {
         this.isLoading = false;
         this.products = productData.products;
         this.totalProducts = productData.productCount;
-        console.log(this.products);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
@@ -54,11 +52,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
         this.userIsAdmin = this.authService.getRole();
-        console.log(this.userIsAdmin);
       });
   }
 
-  
+
 
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;

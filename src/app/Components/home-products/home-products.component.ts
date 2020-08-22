@@ -23,7 +23,6 @@ export class HomeProductsComponent implements OnInit, OnDestroy {
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
-        console.log("home- products ", isAuthenticated);
         this.userIsAuthenticated = isAuthenticated;
       });
   }

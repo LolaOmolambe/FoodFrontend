@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/Components/auth/auth.service';
 import { Subscription, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-//import { Product } from '../../products/product.model';
 
 @Component({
   selector: 'app-cart',
@@ -21,6 +20,8 @@ export class CartComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authStatusSub: Subscription;
   count = 0;
+  deliveryCost = 30
+
   simpleObservable = new Subject();
   simpleObservables = this.simpleObservable.asObservable();
 
@@ -33,16 +34,14 @@ export class CartComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
-    console.log("length ", typeof this.cartObj);
     if (this.cartObj != null) {
-      //console.log(this.cartObj.length);
       this.cartTotal = 0;
+      this.cartTotal += this.deliveryCost;
       this.cartObj.forEach((item) => {
         this.cartTotal += item.qty * item.price;
       });
-      //console.log('total ', this.cartTotal);
-      //console.log('local storage', this.cartObj);
     }
+
     //this.isLoading = true;
     this.userId = this.authService.getUserId();
     this.userIsAdmin = this.authService.getRole();
@@ -54,29 +53,25 @@ export class CartComponent implements OnInit, OnDestroy {
         this.userId = this.authService.getUserId();
         this.userIsAdmin = this.authService.getRole();
         this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
-        //console.log(this.userIsAdmin);
       });
   }
 
-
   openSnackBar() {
-    this.snackBar.open('Item removed from cart','', {
+    this.snackBar.open('Item removed from cart', '', {
       duration: 3000,
       verticalPosition: 'top',
-      panelClass: 'notif-success'
+      panelClass: 'notif-success',
     });
   }
-
 
   removeProductFromCart(product_id: any) {
     for (let i in this.cartObj) {
       if (this.cartObj[i].productId === product_id) {
         let index = this.cartObj.indexOf(this.cartObj[i]);
-        if(index > -1){
-          this.cartObj.splice(index,1);
+        if (index > -1) {
+          this.cartObj.splice(index, 1);
           this.openSnackBar();
         }
-        console.log(this.cartObj);
         break;
       }
     }
@@ -84,21 +79,17 @@ export class CartComponent implements OnInit, OnDestroy {
     localStorage.setItem('cartItems', JSON.stringify(this.cartObj));
 
     this.cartTotal = 0;
+    this.cartTotal += this.deliveryCost;
     this.cartObj.forEach((item) => {
       this.cartTotal += item.qty * item.price;
-      console.log("cartTotal", this.cartTotal);
     });
 
-    if(this.cartObj != null){
+    if (this.cartObj != null) {
       this.shopService.removeOrder(this.cartObj);
     }
-
   }
 
   proceedToCheckout() {
-    console.log(this.userIsAuthenticated);
-    //this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
-
     if (this.userIsAuthenticated === false) {
       this.router.navigate(['login']);
     } else {
@@ -107,7 +98,6 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //this.postsSub.unsubscribe();
     this.authStatusSub.unsubscribe();
   }
 }

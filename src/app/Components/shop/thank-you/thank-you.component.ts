@@ -31,7 +31,6 @@ export class ThankYouComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
         this.userIsAdmin = this.authService.getRole();
-        //console.log(this.userIsAdmin);
       });
     this.userId = this.authService.getUserId();
     this.userIsAdmin = this.authService.getRole();

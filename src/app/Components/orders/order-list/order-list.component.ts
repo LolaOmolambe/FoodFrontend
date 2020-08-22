@@ -33,7 +33,6 @@ export class OrderListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
         this.userIsAdmin = this.authService.getRole();
-        console.log(this.userIsAdmin);
       });
     this.orderService.getOrders(this.postsPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
@@ -44,17 +43,9 @@ export class OrderListComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.orders = ordersData.orders;
         this.totalOrders = ordersData.orderCount;
-        console.log(this.totalOrders);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
-    // this.authStatusSub = this.authService
-    //   .getAuthStatusListener()
-    //   .subscribe((isAuthenticated) => {
-    //     this.userIsAuthenticated = isAuthenticated;
-    //     this.userId = this.authService.getUserId();
-    //     this.userIsAdmin = this.authService.getRole();
-    //     console.log(this.userIsAdmin);
-    //   });
+
   }
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;

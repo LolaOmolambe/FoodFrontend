@@ -42,7 +42,6 @@ export class MyOrdersComponent implements OnInit, OnDestroy{
         this.isLoading = false;
         this.orders = ordersData.orders;
         this.totalOrders = ordersData.orderCount;
-        console.log(this.totalOrders);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
 

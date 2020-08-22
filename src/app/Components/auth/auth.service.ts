@@ -8,7 +8,7 @@ import { AuthData } from './auth-data.model';
 
 const BACKEND_URL = environment.apiUrl + '/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
-//const GOOGLE_BACKEND_URL = environment.apiUrl + ""
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -30,23 +30,18 @@ export class AuthService {
   ) {}
 
   getToken() {
-    //return this.token;
     return localStorage.getItem('token');
   }
 
   getIsAuth() {
     return JSON.parse(localStorage.getItem('isLoggedIn'));
-    //return localStorage.getItem('isLoggedIn');
-    //return this.isAuthenticated;
   }
 
   getUserId() {
-    //return this.userId;
     return localStorage.getItem('userId');
   }
 
   getRole() {
-    //return this.userRole;
     return localStorage.getItem('userRole');
   }
 
@@ -80,7 +75,7 @@ export class AuthService {
   }
   openSnackBar(message: string) {
     this.snackBar.open(message, '', {
-      duration: 3000,
+      duration: 1000,
       verticalPosition: 'top',
       panelClass: 'notif-success',
     });
@@ -106,18 +101,14 @@ export class AuthService {
             this.isAuthenticated = true;
             this.userId = response.userId;
             this.userRole = response.userRole;
-            //this.userRole = response.userRole;
-            //console.log(this.userRole);
             localStorage.setItem('userRole', this.userRole);
             this.authStatusListener.next(true);
 
-            //this.setLoggedIsStatus(true);
+
             const now = new Date();
             const expirationDate = new Date(
               now.getTime() + expiresInDuration * 1000
             );
-            //console.log(expirationDate);
-            //console.log(response.token);
             this.saveAuthData(
               token,
               expirationDate,
@@ -126,7 +117,6 @@ export class AuthService {
             );
             this.openSnackBar('Login Successful');
             this.router.navigate(['/']);
-            //this.router.navigate(["postlist"]);
           }
         },
         (error) => {
@@ -165,7 +155,6 @@ export class AuthService {
   }
 
   private setAuthTimer(duration: number) {
-    console.log('Setting timer: ' + duration);
     this.tokenTimer = setTimeout(() => {
       this.logout();
     }, duration * 1000);
@@ -190,7 +179,6 @@ export class AuthService {
     localStorage.removeItem('userId');
     localStorage.removeItem('userRole');
     localStorage.removeItem('cartItems');
-    //localStorage.removeItem('isLoggedIn');
     localStorage.setItem('isLoggedIn', 'false');
   }
 
@@ -229,14 +217,14 @@ export class AuthService {
             this.isAuthenticated = true;
             this.userId = response.userId;
             this.userRole = response.userRole;
-            console.log(this.userRole);
+
+            localStorage.setItem('isLoggedIn', 'true');
+            //localStorage.setItem('userRole', this.userRole);
             this.authStatusListener.next(true);
             const now = new Date();
             const expirationDate = new Date(
               now.getTime() + expiresInDuration * 1000
             );
-            console.log(expirationDate);
-            console.log(response.token);
             this.saveAuthData(
               token,
               expirationDate,
@@ -244,13 +232,13 @@ export class AuthService {
               this.userRole
             );
             this.openSnackBar('Login Successful');
-            this.router.navigate(['']);
 
           }
         },
         (error) => {
           this.authStatusListener.next(false);
         }
+
       );
   }
 
@@ -259,16 +247,11 @@ export class AuthService {
     password: string,
     passwordConfirm: string
   ) {
-    //let productData: Product | FormData;
-
     let passwordData = {
       passwordCurrent: passwordCurrent,
       password: password,
       passwordConfirm: passwordConfirm,
     };
-
-    //console.log('UPDATE USER ', userData);
-
     this.http
       .patch(BACKEND_URL + '/updatepassword', passwordData)
       .subscribe((response) => {
@@ -282,8 +265,6 @@ export class AuthService {
         clearTimeout(this.tokenTimer);
         this.clearAuthData();
         this.router.navigate(['login']);
-        //this.logout();
-        //this.router.navigate(["/"]);
       });
   }
 }

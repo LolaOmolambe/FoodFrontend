@@ -13,14 +13,7 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    // $('.navbar-collapse a').click(function(){
-    //   console.log("navbar");
-    //   $(".navbar-collapse").collapse('hide');
-    // });
-    // AOS.init({
-    //   duration: 800,
-    //   easing: 'slide'
-    // });
+    
   }
 }
 

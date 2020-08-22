@@ -8,8 +8,9 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css'],
 })
-export class CheckoutComponent implements OnInit, OnDestroy {
+export class CheckoutComponent implements OnInit {
   cartTotal = 0;
+  deliveryCost = 30;
   isLoading = false;
   cartObj = [];
   userIsAuthenticated = false;
@@ -26,10 +27,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.cartObj = JSON.parse(localStorage.getItem('cartItems'));
     if (this.cartObj != null) {
       this.cartTotal = 0;
+      this.cartTotal += this.deliveryCost;
       this.cartObj.forEach((item) => {
         this.cartTotal += item.qty * item.price;
       });
-      //this.isLoading = true;
       this.userId = this.authService.getUserId();
       this.userIsAdmin = this.authService.getRole();
       this.userIsAuthenticated = this.authService.getIsAuth();
@@ -39,7 +40,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.userIsAuthenticated = isAuthenticated;
           this.userId = this.authService.getUserId();
           this.userIsAdmin = this.authService.getRole();
-          //console.log(this.userIsAdmin);
         });
     }
   }
@@ -50,8 +50,5 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.shopService.addOrders(this.cartObj, this.cartTotal);
   }
 
-  ngOnDestroy(): void {
-    //this.postsSub.unsubscribe();
-    this.authStatusSub.unsubscribe();
-  }
+
 }

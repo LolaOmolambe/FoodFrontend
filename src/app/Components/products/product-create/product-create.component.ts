@@ -70,7 +70,6 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
             price: this.product.price
           });
           this.imagePreview = this.product.imagePath;
-          //console.log("img ", this.product.imagePath);
         });
       } else {
         this.mode = 'create';
@@ -93,18 +92,15 @@ export class ProductCreateComponent implements OnInit, OnDestroy {
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
-      ///console.log(this.imagePreview);
     };
     reader.readAsDataURL(file);
   }
 
   onSaveProduct() {
-    console.log('invalid ', this.form.invalid);
     if (this.form.invalid) {
       return;
     }
     this.isLoading = true;
-    console.log('mode ', this.mode);
     if (this.mode === 'create') {
       this.productsService.addProduct(
         this.form.value.title,

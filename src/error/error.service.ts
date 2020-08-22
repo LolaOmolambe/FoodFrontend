@@ -26,23 +26,18 @@ export class ErrorService {
       return false;
     }
     this.isDialogOpen = true;
-    //this.dialog.open(ErrorComponent, {data: {message: errorMessage}});
     const dialogRef = this.dialog.open(ErrorComponent, {
       width: '300px',
       data: data,
+      panelClass: 'custom-modalbox',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
       this.isDialogOpen = false;
-      console.log("data " , data);
 
-      if(data.statusText == "Unauthorized") {
-        console.log("here");
-        this.router.navigate(['/login']);
-      }
-      let animal;
-      animal = result;
+      // if (data.statusText == 'Unauthorized') {
+      //   this.router.navigate(['/login']);
+      // }
     });
   }
 }

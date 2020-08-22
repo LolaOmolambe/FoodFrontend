@@ -10,10 +10,8 @@ const BACKEND_URL = environment.apiUrl + '/order/';
 
 @Injectable({ providedIn: 'root' })
 export class OrdersService {
-  //private products: Product[] = [];
   private orders: [];
   private ordersUpdated = new Subject<{
-    //products: Product[];
     orders: [];
     orderCount: number;
   }>();
@@ -65,7 +63,6 @@ export class OrdersService {
       )
       .pipe(
         map((orderData) => {
-          console.log(orderData);
           return {
             orders: orderData.orders.map((order) => {
               return {
@@ -105,16 +102,13 @@ export class OrdersService {
     let statusData = {
       status: status,
     };
-
-    console.log(statusData);
-
     this.http
       .put<{ status: string; message: string }>(BACKEND_URL + orderId, statusData)
       .subscribe((response) => {
         if (response.status == 'success') {
           this.router.navigate(['/orderlist']);
         }
-        //this.router.navigate(['/']);
+       
       });
   }
 }

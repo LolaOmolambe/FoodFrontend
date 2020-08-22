@@ -22,13 +22,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         if (error.error.message) {
           errorMessage = error.error.message;
         }
-        console.log(error);
         let data = { message: errorMessage, statusText: error.statusText, status: error.status };
         this.errorService.openDialog(data);
-        //this.dialog.open(ErrorComponent, {data: {message: errorMessage}});
-        // this.dialog.c().subscribe(result => {
-        //   console.log('The dialog was closed');
-        // });
+
         return throwError(error);
       })
     );

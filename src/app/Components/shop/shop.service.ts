@@ -12,28 +12,22 @@ export class ShopService {
   simpleObservable = new Subject();
   simpleObservables = this.simpleObservable.asObservable();
   subject = new Subject();
-  //subject = new Subscription();
   cartItems = [];
   cartTotal = 0;
 
   constructor(private http: HttpClient, private router: Router) {}
 
   sendMsg(product) {
-    console.log('Here');
     this.addProductToCart(product);
-
-    //console.log(product);
     this.subject.next(product); //Triggering an event
   }
 
   getMsg() {
-    //console.log("sendMsg")
     return this.subject.asObservable();
   }
 
   addProductToCart(product: any) {
     let productExists = false;
-    console.log('hereeeeee');
     if (JSON.parse(localStorage.getItem('cartItems')) != null) {
       this.cartItems = JSON.parse(localStorage.getItem('cartItems'));
     }
@@ -83,21 +77,15 @@ export class ShopService {
         productData
       )
       .subscribe((responseData) => {
-        console.log(responseData);
-        //console.log("donnnnnn");
         if (responseData.status === 'success') {
-          localStorage.removeItem('cartItems');
+
           this.payOrders(responseData.orderId);
-
-
-          //this.router.navigate(['thankyou']);
         }
       });
   }
 
   removeOrder(cartObj) {
     this.count = cartObj.length;
-    console.log('shop service count ', this.count);
     this.simpleObservable.next(this.count);
   }
 
@@ -111,15 +99,9 @@ export class ShopService {
         BACKEND_URL + 'checkout-session/' + orderId
       )
       .subscribe((responseData) => {
-        console.log(responseData);
-        //console.log("donnnnnn");
         stripe.redirectToCheckout({
           sessionId: responseData.session.id,
         });
-        // if (responseData.status === 'success') {
-        //   localStorage.removeItem('cartItems');
-        //   this.router.navigate(['thankyou']);
-        // }
       });
   }
 
@@ -128,15 +110,13 @@ export class ShopService {
       status: status,
     };
 
-    console.log(statusData);
-
     this.http
       .put<{ status: string; message: string }>(BACKEND_URL + orderId, statusData)
       .subscribe((response) => {
         if (response.status == 'success') {
-          this.router.navigate(['/']);
+          localStorage.removeItem('cartItems');
+          this.router.navigate(['/myorders']);
         }
-        //this.router.navigate(['/']);
       });
   }
 }

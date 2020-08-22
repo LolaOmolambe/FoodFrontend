@@ -11,7 +11,6 @@ const BACKEND_URL = environment.apiUrl + '/admin/';
 @Injectable({ providedIn: 'root' })
 export class AdminService {
   private reportsUpdated = new Subject<{
-    //products: Product[];
     productCount: number;
     userCount: number;
     orderCount: number;

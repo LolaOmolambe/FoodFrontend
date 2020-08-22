@@ -134,7 +134,7 @@
 
 
  $('#dropdown04').on('show.bs.dropdown', function () {
-   console.log('show');
+
  });
 
  // scroll
@@ -188,7 +188,7 @@
        $('.number').each(function(){
          var $this = $(this),
            num = $this.data('number');
-           console.log(num);
+
          $this.animateNumber(
            {
              number: num,
@@ -315,7 +315,7 @@
 
  function makeTimer() {
 
-   var endTime = new Date("21 December 2019 9:56:00 GMT+01:00");
+   var endTime = new Date("2 October 2020 9:56:00 GMT+01:00");
    endTime = (Date.parse(endTime) / 1000);
 
    var now = new Date();
@@ -342,7 +342,7 @@
 setInterval(function() { makeTimer(); }, 100);
 
  $('.navbar-collapse a').click(function(){
-   console.log("navbar");
+   
    $(".navbar-collapse").collapse('hide');
  });
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,11 +18,16 @@ export class UsersService {
     userCount: number;
   }>();
 
-  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private ngZone: NgZone
+  ) {}
 
   openSnackBar(message: string) {
     this.snackBar.open(message, '', {
-      duration: 3000,
+      duration: 2000,
       verticalPosition: 'top',
       panelClass: 'notif-success',
     });
@@ -32,7 +37,7 @@ export class UsersService {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
     this.http
       .get<{ message: string; users: any; maxUsers: number }>(
-        BACKEND_URL + "getallusers" + queryParams
+        BACKEND_URL + 'getallusers' + queryParams
       )
       .pipe(
         map((userData) => {
@@ -70,7 +75,7 @@ export class UsersService {
       _id: string;
       firstName: string;
       lastName: string;
-      email: string,
+      email: string;
       phoneNumber: string;
       address: string;
       state: string;
@@ -84,51 +89,47 @@ export class UsersService {
     address: string,
     phonenumber: string
   ) {
-    //let productData: Product | FormData;
+    let userData = {
+      firstName: firstName,
+      lastName: lastName,
+      address: address,
+      phoneNumber: phonenumber,
+    };
 
-     let userData = {
-        firstName: firstName,
-        lastName: lastName,
-        address: address,
-        phoneNumber: phonenumber
-      }
-
-
-    console.log('UPDATE USER ', userData);
-
-    this.http.patch(BACKEND_URL + "updateMe", userData).subscribe((response) => {
-      this.openSnackBar("User Details Updated");
-      this.router.navigate(["/"]);
-    });
+    this.http
+      .patch(BACKEND_URL + 'updateMe', userData)
+      .subscribe((response) => {
+        location.reload();
+        //this.router.navigate(['/']);
+        this.openSnackBar('User Details Updated');
+      });
   }
 
-   deleteUser(userId: string) {
-     //console.log(userId);
-     return this.http.get(BACKEND_URL + "deactivateuser/" + userId);
-   }
-   reactivateUser(userId: string) {
-    //console.log(userId);
-    return this.http.get(BACKEND_URL + "reactivateuser/" + userId);
+  deleteUser(userId: string) {
+    return this.http.get(BACKEND_URL + 'deactivateuser/' + userId);
+  }
+  reactivateUser(userId: string) {
+    return this.http.get(BACKEND_URL + 'reactivateuser/' + userId);
   }
 
-  contactUsFunction(name: string, email: string, subject: string, message: string) {
+  contactUsFunction(
+    name: string,
+    email: string,
+    subject: string,
+    message: string
+  ) {
     let emailBody = {
       name,
       email,
       subject,
-      message
-    }
+      message,
+    };
 
-    this.http
-      .post(BACKEND_URL + 'contact', emailBody)
-      .subscribe((response) => {
-        this.openSnackBar('Email sent successfully')
-
-
-        this.router.navigate(["contact"]);
-      });
+    this.http.post(BACKEND_URL + 'contact', emailBody).subscribe((response) => {
+      this.openSnackBar('Email sent successfully');
+      location.reload();
+      //this.ngZone.run(() => this.router.navigate(['/contact'])).then();
+      //this.router.navigate(['/contact']);
+    });
   }
-
-
-
 }

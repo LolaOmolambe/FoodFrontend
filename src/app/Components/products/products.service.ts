@@ -18,7 +18,6 @@ export class ProductsService {
   }>();
 
   private reportsUpdated = new Subject<{
-    //products: Product[];
     productCount: number;
     userCount: number;
     orderCount: number;
@@ -95,7 +94,7 @@ export class ProductsService {
     this.http
       .post<{ message: string; post: Product }>(BACKEND_URL, productData)
       .subscribe((responseData) => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/productlist']);
       });
   }
 
@@ -126,8 +125,6 @@ export class ProductsService {
         imagePath: image,
       };
     }
-
-    console.log(productData);
 
     this.http.put(BACKEND_URL + id, productData).subscribe((response) => {
       this.router.navigate(['/']);
@@ -202,7 +199,5 @@ export class ProductsService {
       });
   }
 
-  // deletePost(postId: string) {
-  //   return this.http.delete(BACKEND_URL + postId);
-  // }
+
 }

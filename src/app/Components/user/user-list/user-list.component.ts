@@ -38,7 +38,6 @@ export class UserListComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.users = usersData.users;
         this.totalUsers = usersData.userCount;
-        console.log(this.users);
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService
